@@ -76,4 +76,13 @@ class RecordTest < MiniTest::Unit::TestCase
 
     assert_equal 3, record.encounters.size
   end
+
+  def test_generate_mrn
+    record = Record.new
+    assert record.medical_record_number.nil?, "MRN should be nil"
+    record = Record.update_or_create(record)
+    assert record.medical_record_number.nil?, "MRN should be nil"
+    record2 = Record.update_or_create(Record.new,{generate_mrn: true})
+    assert !record2.medical_record_number.nil?, "MRN should not be nil"
+  end
 end

@@ -1,8 +1,8 @@
 require 'fileutils'
+require 'uuid'
 module HealthDataStandards
   module Import
     class BulkRecordImporter
-
       def self.import_directory(source_dir, failed_dir=nil)
         failed_dir ||= File.join(source_dir, '../', 'failed_imports')
         files = Dir.glob(File.join(source_dir, '*.*'))
@@ -48,6 +48,7 @@ module HealthDataStandards
           File.open(File.join(failed_dir,"#{name}.error"),"w") do |f|
             f.puts($!.message)
             f.puts($!.backtrace)
+
           end
         end
       end
@@ -57,7 +58,7 @@ module HealthDataStandards
         Record.update_or_create(Record.new(json))
       end
       
-      def self.import(xml_data, provider_map = {})
+      def self.import(xml_data,options={})
         doc = Nokogiri::XML(xml_data)
         
         providers = []
@@ -86,8 +87,9 @@ module HealthDataStandards
         else
           return {status: 'error', message: 'Unknown XML Format', status_code: 400}
         end
-
-        record = Record.update_or_create(patient_data)
+        # this most likely will only be used in testing but is 
+        record.medical_record_number =  options[:mrn_generator].generate if options[:mrn_generator]
+        record = Record.update_or_create(patient_data,options)
         record.provider_performances = providers
         providers.each do |prov| 
           prov.provider.ancestors.each do |ancestor|
