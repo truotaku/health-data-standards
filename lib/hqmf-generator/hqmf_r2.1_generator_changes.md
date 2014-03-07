@@ -108,16 +108,33 @@ Replace `procedureReference` with `criteriaReference`
 -------------------------------------------------------------------------------
 
 # ERROR #006
-
+Element '{urn:hl7-org:v3}high': This element is not expected. Expected is one of ( {urn:hl7-org:v3}expression, {urn:hl7-org:v3}originalText, {urn:hl7-org:v3}uncertainty, {urn:hl7-org:v3}uncertainRange, {urn:hl7-org:v3}translation ).
 
 ##FIX
+Modify generation of `pauseQuantity` to have a child `uncertainRange` element containing the range information.
 
+## CHANGE
+_WARNING: We should probably not be using the element name as a condition, but there was nothing much else to go off in the model._
+_This needs to be revisited._
 
-## REPRESENTATIVE CHANGE
-
+     <%- if value.class==HQMF::Range -%>
+       <<%= name %> <%= "xsi:type=\"#{value.type}\"" if include_type %>>
+    -    <%= xml_for_value(value.low, 'low', false) if value.low -%>
+    -    <%= xml_for_value(value.high, 'high', false) if value.high -%>
+    +    <%- # WARNING: Hacky Fix That Must Be Looked At Again! -%>
+    +    <%- if name == 'pauseQuantity' -%>
+    +      <uncertainRange <%= "lowClosed=\"true\"" if value.low && value.low.inclus
+    +        <%= xml_for_value(value.low, 'low') if value.low -%>
+    +        <%= xml_for_value(value.high, 'high') if value.high -%>
+    +      </uncertainRange>
+    +    <%- else -%>
+    +      <%= xml_for_value(value.low, 'low', false) if value.low -%>
+    +      <%= xml_for_value(value.high, 'high', false) if value.high -%>
+    +    <%- end -%>
+       </<%= name %>>
 
 ## GIT STATUS
-
+    modified:   lib/hqmf-generator/value.xml.erb
 
 -------------------------------------------------------------------------------
 
