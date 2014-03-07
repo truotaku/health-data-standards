@@ -173,12 +173,20 @@ Replace `substanceAdministrationReference` with `criteriaReference`.
 -------------------------------------------------------------------------------
 
 # ERROR #008
+Element '{urn:hl7-org:v3}supplyReference': This element is not expected. Expected is one of ( {urn:hl7-org:v3}realmCode, {urn:hl7-org:v3}typeId, {urn:hl7-org:v3}templateId, {urn:hl7-org:v3}criteriaReference ).
 
 ##FIX
+Replace `supplyReference` with `criteriaReference`
 
 ## REPRESENTATIVE CHANGE
+    -            <supplyReference moodCode="EVN" classCode="SPLY">
+    +            <criteriaReference moodCode="EVN" classCode="SPLY">
+                   <id root="2.16.840.1.113883.3.100.1" extension="<%= section_name(
+    -            </supplyReference>
+    +            </criteriaReference>
 
 ## GIT STATUS
+    modified:   lib/hqmf-generator/supply_criteria.xml.erb
 
 -------------------------------------------------------------------------------
 
