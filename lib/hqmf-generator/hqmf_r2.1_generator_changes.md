@@ -191,16 +191,30 @@ Replace `supplyReference` with `criteriaReference`
 -------------------------------------------------------------------------------
 
 # ERROR #009
-
+Element '{urn:hl7-org:v3}isCriterionInd': This element is not expected. Expected is ( {urn:hl7-org:v3}precondition ).
 
 ##FIX
-
+Move `isCriterionInd` from child element to attribute.
 
 ## REPRESENTATIVE CHANGE
-
+    @@ -1,5 +1,5 @@
+           <component typeCode="COMP">
+    -        <<%= population_element_prefix(criteria_id) %>Criteria  classCode="OBS" moodCode="EVN">
+    +        <<%= population_element_prefix(criteria_id) %>Criteria  classCode="OBS" moodCode="EVN" isCriterionInd="true">
+               <id root="c75181d0-73eb-11de-8a39-0800200c9a66"
+                 extension="<%= population_criteria.hqmf_id %>"/>
+               <code codeSystem="2.16.840.1.113883.5.1063"
+    @@ -7,7 +7,6 @@
+                   code="<%= population_criteria.type %>">
+                 <displayName value="<%= population_criteria.title %>"/>
+               </code>
+    -          <isCriterionInd value="true"/>
+               <%- if population_criteria.preconditions.present? && population_criteria.preconditions.length > 0 -%>
+                 <%- population_criteria.preconditions.each do |precondition| -%>
+               <%= xml_for_precondition(precondition) %>
 
 ## GIT STATUS
-
+    modified:   lib/hqmf-generator/population_criteria.xml.erb
 
 -------------------------------------------------------------------------------
 
