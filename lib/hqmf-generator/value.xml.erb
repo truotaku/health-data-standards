@@ -1,5 +1,5 @@
 <%- if value.class==HQMF::Range -%>
-  <<%= name %> xsi:type="<%= value.type %>">
+  <<%= name %> <%= "xsi:type=\"#{value.type}\"" if include_type %>>
     <%= xml_for_value(value.low, 'low', false) if value.low -%>
     <%= xml_for_value(value.high, 'high', false) if value.high -%>
   </<%= name %>>
