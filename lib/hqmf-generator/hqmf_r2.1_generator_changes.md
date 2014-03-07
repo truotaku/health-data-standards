@@ -2,13 +2,24 @@
 Element '{urn:hl7-org:v3}observationReference': This element is not expected. Expected is one of ( {urn:hl7-org:v3}criteriaReference, {urn:hl7-org:v3}actCriteria, {urn:hl7-org:v3}substanceAdministrationCriteria, {urn:hl7-org:v3}observationCriteria, {urn:hl7-org:v3}encounterCriteria, {urn:hl7-org:v3}procedureCriteria, {urn:hl7-org:v3}supplyCriteria, {urn:hl7-org:v3}grouperCriteria ).
 
 ## FIX
-Replace `observationReference` with `criteriaReference`
+Replace `observationReference` with `criteriaReference` in templates.
 
-## REPRESENTATIVE CHANGE
+As well as the fix to the specific templates, there are also generic reference-related templates that need
+to be modified to always use `criteriaReference`.
+
+## REPRESENTATIVE CHANGES
     -            <observationReference moodCode="EVN" classCode="OBS">
     +            <criteriaReference moodCode="EVN" classCode="OBS">
                    <id root="2.16.840.1.113883.3.100.1" extension="<%= section_name(
     -            </observationReference>
+    +            </criteriaReference>
+
+and
+
+    -            <<%= reference_element_name(reference.id) %>Reference moodCode="EVN
+    +            <criteriaReference moodCode="EVN" classCode="<%= reference_type_nam
+                   <id root="2.16.840.1.113883.3.100.1" extension="<%= reference.id
+    -            </<%= reference_element_name(reference.id) %>Reference>
     +            </criteriaReference>
 
 ## GIT STATUS:
@@ -17,6 +28,11 @@ Replace `observationReference` with `criteriaReference`
     modified:   lib/hqmf-generator/observation_criteria.xml.erb
     modified:   lib/hqmf-generator/source.xml.erb
     modified:   lib/hqmf-generator/specific_occurrence.xml.erb
+
+and
+
+    modified:   lib/hqmf-generator/precondition.xml.erb
+    modified:   lib/hqmf-generator/reference.xml.erb
 
 -------------------------------------------------------------------------------
 
@@ -158,15 +174,11 @@ Replace `substanceAdministrationReference` with `criteriaReference`.
 
 # ERROR #008
 
-
 ##FIX
-
 
 ## REPRESENTATIVE CHANGE
 
-
 ## GIT STATUS
-
 
 -------------------------------------------------------------------------------
 
