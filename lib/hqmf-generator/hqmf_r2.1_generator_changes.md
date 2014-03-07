@@ -90,16 +90,20 @@ and
 -------------------------------------------------------------------------------
 
 # ERROR #005
-
+Element '{urn:hl7-org:v3}procedureReference': This element is not expected. Expected is one of ( {urn:hl7-org:v3}realmCode, {urn:hl7-org:v3}typeId, {urn:hl7-org:v3}templateId, {urn:hl7-org:v3}criteriaReference ).
 
 ##FIX
+Replace `procedureReference` with `criteriaReference`
 
-
-## REPRESENTATIVE CHANGE
-
+## CHANGE
+    -            <procedureReference moodCode="EVN" classCode="PROC">
+    +            <criteriaReference moodCode="EVN" classCode="PROC">
+                   <id root="2.16.840.1.113883.3.100.1" extension="<%= section_name(
+    -            </procedureReference>
+    +            </criteriaReference>
 
 ## GIT STATUS
-
+    modified:   lib/hqmf-generator/procedure_criteria.xml.erb
 
 -------------------------------------------------------------------------------
 
