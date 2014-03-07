@@ -139,16 +139,20 @@ _This needs to be revisited._
 -------------------------------------------------------------------------------
 
 # ERROR #007
-
+Element '{urn:hl7-org:v3}substanceAdministrationReference': This element is not expected. Expected is one of ( {urn:hl7-org:v3}realmCode, {urn:hl7-org:v3}typeId, {urn:hl7-org:v3}templateId, {urn:hl7-org:v3}criteriaReference ).
 
 ##FIX
+Replace `substanceAdministrationReference` with `criteriaReference`.
 
-
-## REPRESENTATIVE CHANGE
-
+## CHANGE
+    -            <substanceAdministrationReference moodCode="EVN" classCode="SBADM">
+    +            <criteriaReference moodCode="EVN" classCode="SBADM">
+                   <id root="2.16.840.1.113883.3.100.1" extension="<%= section_name(
+    -            </substanceAdministrationReference>
+    +            </criteriaReference>
 
 ## GIT STATUS
-
+    modified:   lib/hqmf-generator/substance_criteria.xml.erb
 
 -------------------------------------------------------------------------------
 
