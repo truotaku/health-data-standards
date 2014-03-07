@@ -18,7 +18,7 @@
       <code code="MSRTP" codeSystem="2.16.840.1.113883.3.560">
         <displayName value="Measurement period"/>
       </code>
-      <value xsi:type="PIVL_TS"">
+      <value xsi:type="PIVL_TS">
         <phase lowClosed="true" highClosed="true">
             <%- if doc.measure_period.low != nil -%>
                 <low value="<%= doc.measure_period.low.value %>" />
@@ -30,6 +30,7 @@
                 <width xsi:type="PQ" value="<%= doc.measure_period.width.value %>" unit="a" />
             <%- end -%>
         </phase>
+      </value>
     </measurePeriod>
   </controlVariable>
   <%- doc.attributes.each do |attribute| -%>
