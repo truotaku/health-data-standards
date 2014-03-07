@@ -8,9 +8,9 @@
           <%= xml_for_effective_time(criteria) %>
           <%= xml_for_reason(criteria) %>
           <definition>
-            <procedureReference moodCode="EVN" classCode="PROC">
+            <criteriaReference moodCode="EVN" classCode="PROC">
               <id root="2.16.840.1.113883.3.100.1" extension="<%= section_name(criteria) %>"/>
-            </procedureReference>
+            </criteriaReference>
           </definition>
           <%= xml_for_temporal_references(criteria) %>
           <%= xml_for_fields(criteria) %>
