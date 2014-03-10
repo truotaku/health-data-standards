@@ -266,7 +266,7 @@ to consider implications regarding duplication of data, etc.
 Element '{urn:hl7-org:v3}patientPopulationCriteria': This element is not expected. Expected is one of ( {urn:hl7-org:v3}realmCode, {urn:hl7-org:v3}typeId, {urn:hl7-org:v3}templateId, {urn:hl7-org:v3}localVariableName, {urn:hl7-org:v3}stratifierCriteria, {urn:hl7-org:v3}denominatorExceptionCriteria, {urn:hl7-org:v3}denominatorExclusionCriteria, {urn:hl7-org:v3}numeratorExclusionCriteria, {urn:hl7-org:v3}measurePopulationExclusionCriteria, {urn:hl7-org:v3}initialPopulationCriteria ).
 
 ##FIX
-Rename 'patientPopulation' to 'initialPopulation' in the generator.
+Rename `patientPopulation` to `initialPopulation` in the generator.
 
 ## CHANGE
            def population_element_prefix(population_criteria_code)
@@ -286,13 +286,14 @@ Rename 'patientPopulation' to 'initialPopulation' in the generator.
 Element '{urn:hl7-org:v3}author', attribute 'contextControlCode': The attribute 'contextControlCode' is not allowed.
 
 ##FIX
+Remove `contextControlCode` since it is no longer used.
 
-
-## REPRESENTATIVE CHANGE
-
+## CHANGE
+    -  <author typeCode="AUT" contextControlCode="OP">
+    +  <author typeCode="AUT">
 
 ## GIT STATUS
-
+    modified:   lib/hqmf-generator/document.xml.erb
 
 -------------------------------------------------------------------------------
 
