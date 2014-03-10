@@ -301,13 +301,16 @@ Remove `contextControlCode` since it is no longer used.
 Element '{urn:hl7-org:v3}measureAttribute': Character content other than whitespace is not allowed because the content type is 'element-only'.
 
 ##FIX
+This was caused buy unescaped '<' and '>' in the `value` XML attribute.  Special characters need to be escaped in XML attributes.
 
+*QUESTION:* Do we need to comb through all of the generator code to fix all cases where free text is accepted in attribute values?
 
-## REPRESENTATIVE CHANGE
-
+## CHANGE
+    -                       <value xsi:type="ED" value="<%= attribute.value %>"/>
+    +                       <value xsi:type="ED" value="<%=ERB::Util::h attribute.value %>"/>
 
 ## GIT STATUS
-
+    modified:   lib/hqmf-generator/attribute.xml.erb
 
 -------------------------------------------------------------------------------
 
