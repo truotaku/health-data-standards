@@ -234,9 +234,10 @@ Move inner text of `text` elements to the `value` attribute.
 -------------------------------------------------------------------------------
 
 # ERROR #011
+Element '{urn:hl7-org:v3}measureAttribute': Missing child element(s). Expected is ( {urn:hl7-org:v3}value ).
 
 ##FIX
-
+TBD - Currently the value (and some other data) is not being parsed from the r1 measure into the model.
 
 ## REPRESENTATIVE CHANGE
 
@@ -247,7 +248,7 @@ Move inner text of `text` elements to the `value` attribute.
 -------------------------------------------------------------------------------
 
 # ERROR #012
-
+Element '{urn:hl7-org:v3}criteriaReference': This element is not expected. Expected is one of ( {urn:hl7-org:v3}actCriteria, {urn:hl7-org:v3}substanceAdministrationCriteria, {urn:hl7-org:v3}actDefinition, {urn:hl7-org:v3}observationCriteria, {urn:hl7-org:v3}encounterCriteria, {urn:hl7-org:v3}procedureCriteria, {urn:hl7-org:v3}supplyCriteria, {urn:hl7-org:v3}grouperCriteria ).
 
 ##FIX
 
@@ -261,7 +262,7 @@ Move inner text of `text` elements to the `value` attribute.
 -------------------------------------------------------------------------------
 
 # ERROR #013
-
+Element '{urn:hl7-org:v3}patientPopulationCriteria': This element is not expected. Expected is one of ( {urn:hl7-org:v3}realmCode, {urn:hl7-org:v3}typeId, {urn:hl7-org:v3}templateId, {urn:hl7-org:v3}localVariableName, {urn:hl7-org:v3}stratifierCriteria, {urn:hl7-org:v3}denominatorExceptionCriteria, {urn:hl7-org:v3}denominatorExclusionCriteria, {urn:hl7-org:v3}numeratorExclusionCriteria, {urn:hl7-org:v3}measurePopulationExclusionCriteria, {urn:hl7-org:v3}initialPopulationCriteria ).
 
 ##FIX
 
@@ -275,7 +276,7 @@ Move inner text of `text` elements to the `value` attribute.
 -------------------------------------------------------------------------------
 
 # ERROR #014
-
+Element '{urn:hl7-org:v3}author', attribute 'contextControlCode': The attribute 'contextControlCode' is not allowed.
 
 ##FIX
 
@@ -289,7 +290,7 @@ Move inner text of `text` elements to the `value` attribute.
 -------------------------------------------------------------------------------
 
 # ERROR #015
-
+Element '{urn:hl7-org:v3}measureAttribute': Character content other than whitespace is not allowed because the content type is 'element-only'.
 
 ##FIX
 
@@ -303,7 +304,7 @@ Move inner text of `text` elements to the `value` attribute.
 -------------------------------------------------------------------------------
 
 # ERROR #016
-
+Element '{urn:hl7-org:v3}repeatNumber', attribute '{http://www.w3.org/2001/XMLSchema-instance}type': The type definition '{urn:hl7-org:v3}IVL_PQ', specified by xsi:type, is blocked or not validly derived from the type definition of the element declaration.
 
 ##FIX
 
@@ -317,7 +318,7 @@ Move inner text of `text` elements to the `value` attribute.
 -------------------------------------------------------------------------------
 
 # ERROR #017
-
+Element '{urn:hl7-org:v3}QualityMeasureDocument': Character content other than whitespace is not allowed because the content type is 'element-only'.
 
 ##FIX
 
@@ -331,7 +332,7 @@ Move inner text of `text` elements to the `value` attribute.
 -------------------------------------------------------------------------------
 
 # ERROR #018
-
+Element '{urn:hl7-org:v3}low', attribute 'unit': The attribute 'unit' is not allowed.
 
 ##FIX
 
@@ -345,7 +346,7 @@ Move inner text of `text` elements to the `value` attribute.
 -------------------------------------------------------------------------------
 
 # ERROR #019
-
+Element '{urn:hl7-org:v3}high', attribute 'unit': The attribute 'unit' is not allowed.
 
 ##FIX
 
@@ -359,7 +360,7 @@ Move inner text of `text` elements to the `value` attribute.
 -------------------------------------------------------------------------------
 
 # ERROR #020
-
+Element '{urn:hl7-org:v3}code': Character content other than whitespace is not allowed because the content type is 'element-only'.
 
 ##FIX
 
@@ -373,7 +374,7 @@ Move inner text of `text` elements to the `value` attribute.
 -------------------------------------------------------------------------------
 
 # ERROR #021
-
+Element '{urn:hl7-org:v3}observationCriteria': Character content other than whitespace is not allowed because the content type is 'element-only'.
 
 ##FIX
 
@@ -387,21 +388,7 @@ Move inner text of `text` elements to the `value` attribute.
 -------------------------------------------------------------------------------
 
 # ERROR #022
-
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #023
-
+Element '{urn:hl7-org:v3}http:': This element is not expected.
 
 ##FIX
 
@@ -413,173 +400,3 @@ Move inner text of `text` elements to the `value` attribute.
 
 
 -------------------------------------------------------------------------------
-
-# ERROR #024
-
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #025
-
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #026
-
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #027
-
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #028
-
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #029
-
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #030
-
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #031
-
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #032
-
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #033
-
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #034
-
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #035
-
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-
