@@ -219,21 +219,21 @@ Move `isCriterionInd` from child element to attribute.
 -------------------------------------------------------------------------------
 
 # ERROR #010
-
+Element '{urn:hl7-org:v3}text': Character content other than whitespace is not allowed because the content type is 'element-only'.
 
 ##FIX
-
+Move inner text of `text` elements to the `value` attribute.
 
 ## REPRESENTATIVE CHANGE
-
+    -      <text>This section describes the data criteria.</text>
+    +      <text value="This section describes the data criteria."/>
 
 ## GIT STATUS
-
+    modified:   lib/hqmf-generator/document.xml.erb
 
 -------------------------------------------------------------------------------
 
 # ERROR #011
-
 
 ##FIX
 
