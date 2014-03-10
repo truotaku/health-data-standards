@@ -251,7 +251,8 @@ TBD - Currently the value (and some other data) is not being parsed from the r1 
 Element '{urn:hl7-org:v3}criteriaReference': This element is not expected. Expected is one of ( {urn:hl7-org:v3}actCriteria, {urn:hl7-org:v3}substanceAdministrationCriteria, {urn:hl7-org:v3}actDefinition, {urn:hl7-org:v3}observationCriteria, {urn:hl7-org:v3}encounterCriteria, {urn:hl7-org:v3}procedureCriteria, {urn:hl7-org:v3}supplyCriteria, {urn:hl7-org:v3}grouperCriteria ).
 
 ##FIX
-
+TBD - The current code makes use of references here.  It appears that we will need to dereference them and add the original criteria.  May need
+to consider implications regarding duplication of data, etc.
 
 ## REPRESENTATIVE CHANGE
 
@@ -265,13 +266,19 @@ Element '{urn:hl7-org:v3}criteriaReference': This element is not expected. Expec
 Element '{urn:hl7-org:v3}patientPopulationCriteria': This element is not expected. Expected is one of ( {urn:hl7-org:v3}realmCode, {urn:hl7-org:v3}typeId, {urn:hl7-org:v3}templateId, {urn:hl7-org:v3}localVariableName, {urn:hl7-org:v3}stratifierCriteria, {urn:hl7-org:v3}denominatorExceptionCriteria, {urn:hl7-org:v3}denominatorExclusionCriteria, {urn:hl7-org:v3}numeratorExclusionCriteria, {urn:hl7-org:v3}measurePopulationExclusionCriteria, {urn:hl7-org:v3}initialPopulationCriteria ).
 
 ##FIX
+Rename 'patientPopulation' to 'initialPopulation' in the generator.
 
-
-## REPRESENTATIVE CHANGE
-
+## CHANGE
+           def population_element_prefix(population_criteria_code)
+             case population_criteria_code
+             when HQMF::PopulationCriteria::IPP
+    -          'patientPopulation'
+    +          'initialPopulation'
+             when HQMF::PopulationCriteria::DENOM
+               'denominator'
 
 ## GIT STATUS
-
+    modified:   lib/hqmf-generator/hqmf-generator.rb
 
 -------------------------------------------------------------------------------
 

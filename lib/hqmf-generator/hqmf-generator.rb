@@ -273,7 +273,7 @@ module HQMF2
       def population_element_prefix(population_criteria_code)
         case population_criteria_code
         when HQMF::PopulationCriteria::IPP
-          'patientPopulation'
+          'initialPopulation'
         when HQMF::PopulationCriteria::DENOM
           'denominator'
         when HQMF::PopulationCriteria::NUMER
