@@ -40,7 +40,7 @@
     <dataCriteriaSection>
       <code code="57025-9" codeSystem="2.16.840.1.113883.6.1"/>
       <title value="Data Criteria Section"/>
-      <text>This section describes the data criteria.</text>
+      <text value="This section describes the data criteria."/>
       <%- doc.all_data_criteria.each do |data_criteria| -%>
       <%= xml_for_data_criteria(data_criteria, false) %>
       <%- end -%>
@@ -60,9 +60,7 @@
       <id root="2.16.840.1.113883.3.100.1" extension="<%= population['id'] || "Population#{population_index}" %>"/>
       <code code="57026-7" codeSystem="2.16.840.1.113883.6.1"/>
       <title value="<%= population['title'] %>"/>
-      <text>This section describes the Initial Patient Population,
-        Numerator, Denominator, Denominator Exceptions, and Measure
-        Populations</text>
+      <text value="This section describes the Initial Patient Population, Numerator, Denominator, Denominator Exceptions, and Measure Populations"/>
       <%- population.keys.each do |criteria_id| -%>
       <%= xml_for_population_criteria(population, criteria_id) %>
       <%- end -%>
