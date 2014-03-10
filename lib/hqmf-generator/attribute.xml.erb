@@ -5,7 +5,7 @@
 				<displayName value="<%= attribute.name %>"/>
 			</code>
 			<%- if attribute.value -%>
-			<value xsi:type="ED" value="<%= attribute.value %>"/>
+			<value xsi:type="ED" value="<%=ERB::Util::h attribute.value %>"/>
 			<%- end -%>
 		</measureAttribute>
 	</subjectOf>
