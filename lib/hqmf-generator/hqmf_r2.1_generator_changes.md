@@ -318,13 +318,16 @@ This was caused buy unescaped '<' and '>' in the `value` XML attribute.  Special
 Element '{urn:hl7-org:v3}repeatNumber', attribute '{http://www.w3.org/2001/XMLSchema-instance}type': The type definition '{urn:hl7-org:v3}IVL_PQ', specified by xsi:type, is blocked or not validly derived from the type definition of the element declaration.
 
 ##FIX
+HQMF R2.1 defines `repeatNumber` as having type `IVL_INT`, so we can't redefine as type `IVL_PQ`.  Remove the type from the generated template.
 
+*QUESTION:* Why are we changing it to `repeatNumber` anyway?  The original r1 measure just loosely uses `<value xsi:type="IVL_PQ">`-- is there a reason we recast it?
 
-## REPRESENTATIVE CHANGE
-
+## CHANGE
+    -              <%= xml_for_value(subset.value, 'repeatNumber') %>
+    +              <%= xml_for_value(subset.value, 'repeatNumber', false) %>
 
 ## GIT STATUS
-
+    modified:   lib/hqmf-generator/subset.xml.erb
 
 -------------------------------------------------------------------------------
 
@@ -395,19 +398,3 @@ Element '{urn:hl7-org:v3}observationCriteria': Character content other than whit
 
 ## GIT STATUS
 
-
--------------------------------------------------------------------------------
-
-# ERROR #022
-Element '{urn:hl7-org:v3}http:': This element is not expected.
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
