@@ -63,7 +63,7 @@ module HQMF
         value = attribute_hash[:value]
         unit = attribute_hash[:unit]
         name = attribute_hash[:name]
-        attributes << HQMF::Attribute.new(key,code,value,unit,name)
+        attributes << HQMF::Attribute.new(key,code,nil, nil, value,nil, nil, nil, nil, unit,name)
       end
       attributes
     end
