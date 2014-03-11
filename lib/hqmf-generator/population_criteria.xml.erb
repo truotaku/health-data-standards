@@ -5,7 +5,7 @@
           <code codeSystem="2.16.840.1.113883.5.1063"
               codeSystemName="HL7 Observation Value"
               code="<%= population_criteria.type %>">
-            <displayName value="<%= population_criteria.title %>"/>
+            <displayName value="<%=ERB::Util::h population_criteria.title %>"/>
           </code>
           <%- if population_criteria.preconditions.present? && population_criteria.preconditions.length > 0 -%>
             <%- population_criteria.preconditions.each do |precondition| -%>
