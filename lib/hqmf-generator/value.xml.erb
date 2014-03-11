@@ -17,7 +17,7 @@
   <%- else -%>
   <<%= name %> xsi:type="<%= value.type %>" codeSystem="<%= value.system %>" code="<%= value.code %>">
   <%- end -%>
-     <displayName value="<%= value.title %>"/>
+     <displayName value="<%=ERB::Util::h value.title %>"/>
   </<%= name %>>
 <%- elsif value.class==HQMF::Value -%>
   <%- if value.derived? -%>

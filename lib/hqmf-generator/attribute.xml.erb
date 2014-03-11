@@ -2,7 +2,7 @@
 		<measureAttribute>
 			<id root="2.16.840.1.113883.3.100.1" extension="<%= attribute.id %>"/>
 			<code code="<%= attribute.code %>">
-				<displayName value="<%= attribute.name %>"/>
+				<displayName value="<%=ERB::Util::h attribute.name %>"/>
 			</code>
 			<%- if attribute.value -%>
 			<value xsi:type="ED" value="<%=ERB::Util::h attribute.value %>"/>

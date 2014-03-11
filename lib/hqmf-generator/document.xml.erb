@@ -2,8 +2,8 @@
 <QualityMeasureDocument xmlns="urn:hl7-org:v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <id root="2.16.840.1.113883.3.100.1" extension="<%= doc.hqmf_id %>" />
   <code code="57024-2" codeSystem="2.16.840.1.113883.6.1"/>
-  <title value="<%= doc.title %>"/>
-  <text value="<%= doc.description %>"/>
+  <title value="<%=ERB::Util::h doc.title %>"/>
+  <text value="<%=ERB::Util::h doc.description %>"/>
   <statusCode code="completed" />
   <setId root="2.16.840.1.113883.3.100.1" extension="<%= doc.hqmf_set_id %>" />
   <versionNumber value="<%= doc.hqmf_version_number %>"/>
@@ -59,7 +59,7 @@
       <%- end -%>
       <id root="2.16.840.1.113883.3.100.1" extension="<%= population['id'] || "Population#{population_index}" %>"/>
       <code code="57026-7" codeSystem="2.16.840.1.113883.6.1"/>
-      <title value="<%= population['title'] %>"/>
+      <title value="<%=ERB::Util::h population['title'] %>"/>
       <text value="This section describes the Initial Patient Population, Numerator, Denominator, Denominator Exceptions, and Measure Populations"/>
       <%- population.keys.each do |criteria_id| -%>
       <%= xml_for_population_criteria(population, criteria_id) %>
