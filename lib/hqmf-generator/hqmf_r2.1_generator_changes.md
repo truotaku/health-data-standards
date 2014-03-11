@@ -298,19 +298,26 @@ Remove `contextControlCode` since it is no longer used.
 -------------------------------------------------------------------------------
 
 # ERROR #015
-Element '{urn:hl7-org:v3}measureAttribute': Character content other than whitespace is not allowed because the content type is 'element-only'.
+Element '{urn:hl7-org:v3}QualityMeasureDocument': Character content other than whitespace is not allowed because the content type is 'element-only'.
 
 ##FIX
-This was caused buy unescaped '<' and '>' in the `value` XML attribute.  Special characters need to be escaped in XML attributes.
+This was caused buy unescaped `<`,`>`, and `"` in the various XML attributes.  Special characters need to be escaped in XML attributes.
 
 *QUESTION:* Do we need to comb through all of the generator code to fix all cases where free text is accepted in attribute values?
 
-## CHANGE
+## REPRESENTATIVE CHANGE
     -                       <value xsi:type="ED" value="<%= attribute.value %>"/>
     +                       <value xsi:type="ED" value="<%=ERB::Util::h attribute.value %>"/>
 
 ## GIT STATUS
     modified:   lib/hqmf-generator/attribute.xml.erb
+    modified:   lib/hqmf-generator/code.xml.erb
+    modified:   lib/hqmf-generator/description.xml.erb
+    modified:   lib/hqmf-generator/document.xml.erb
+    modified:   lib/hqmf-generator/field.xml.erb
+    modified:   lib/hqmf-generator/hqmf_r2.1_generator_changes.md
+    modified:   lib/hqmf-generator/population_criteria.xml.erb
+    modified:   lib/hqmf-generator/value.xml.erb
 
 -------------------------------------------------------------------------------
 
@@ -318,83 +325,19 @@ This was caused buy unescaped '<' and '>' in the `value` XML attribute.  Special
 Element '{urn:hl7-org:v3}repeatNumber', attribute '{http://www.w3.org/2001/XMLSchema-instance}type': The type definition '{urn:hl7-org:v3}IVL_PQ', specified by xsi:type, is blocked or not validly derived from the type definition of the element declaration.
 
 ##FIX
-HQMF R2.1 defines `repeatNumber` as having type `IVL_INT`, so we can't redefine as type `IVL_PQ`.  Remove the type from the generated template.
-
-*QUESTION:* Why are we changing it to `repeatNumber` anyway?  The original r1 measure just loosely uses `<value xsi:type="IVL_PQ">`-- is there a reason we recast it?
+HQMF R2.1 defines `repeatNumber` as having type `IVL_INT`, so we can't redefine as type `IVL_PQ`.  As best I can tell, the `repeatNumber` element only
+makes sense when the subset type is `Count`.  Since it doesn't support `unit` on the embedded `high` and `low` elements, use `repeatNumber` only on
+counts and use `value` on everything else.
 
 ## CHANGE
-    -              <%= xml_for_value(subset.value, 'repeatNumber') %>
-    +              <%= xml_for_value(subset.value, 'repeatNumber', false) %>
+    -              <%= xml_for_value(subset.value, 'value') %>
+    +              <%- if subset.type == 'COUNT' -%>
+    +                <%= xml_for_value(subset.value, 'repeatNumber', false) %>
+    +              <%- else -%>
+    +                <%= xml_for_value(subset.value, 'value') %>
+    +              <%- end -%>
 
 ## GIT STATUS
     modified:   lib/hqmf-generator/subset.xml.erb
 
 -------------------------------------------------------------------------------
-
-# ERROR #017
-Element '{urn:hl7-org:v3}QualityMeasureDocument': Character content other than whitespace is not allowed because the content type is 'element-only'.
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #018
-Element '{urn:hl7-org:v3}low', attribute 'unit': The attribute 'unit' is not allowed.
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #019
-Element '{urn:hl7-org:v3}high', attribute 'unit': The attribute 'unit' is not allowed.
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #020
-Element '{urn:hl7-org:v3}code': Character content other than whitespace is not allowed because the content type is 'element-only'.
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
-
--------------------------------------------------------------------------------
-
-# ERROR #021
-Element '{urn:hl7-org:v3}observationCriteria': Character content other than whitespace is not allowed because the content type is 'element-only'.
-
-##FIX
-
-
-## REPRESENTATIVE CHANGE
-
-
-## GIT STATUS
-
