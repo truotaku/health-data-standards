@@ -20,6 +20,36 @@ module HQMF1
       end
     end
 
+    # Get the code system
+    # @return [String] the code system
+    def code_system
+      @entry.at_xpath('./cda:code/@codeSystem')
+    end
+
+    # Get the value code system
+    # @return [String] the value code system
+    def value_code_system
+      @entry.at_xpath('./cda:value/@codeSystem')
+    end
+
+    # Get the value code
+    # @return [String] the value code
+    def value_code
+      @entry.at_xpath('./cda:value/@code')
+    end
+
+    # Get the value name
+    # @return [String] the value name
+    def value_name
+      @entry.at_xpath('./cda:value/cda:displayName/@value')
+    end
+
+    # Get the value type
+    # @return [String] the value type
+    def value_type
+      @entry.at_xpath('./cda:value/@xsi:type')
+    end
+
     # Get the attribute name
     # @return [String] the name
     def name
@@ -61,7 +91,7 @@ module HQMF1
     end
     
     def to_json
-      {self.const_name => build_hash(self, [:code,:value,:unit,:name,:id])}
+      {self.const_name => build_hash(self, [:id,:code,:code_system,:value,:value_type,:value_code,:value_code_system,:value_name,:unit,:name])}
     end
     
   end
