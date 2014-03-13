@@ -37,6 +37,10 @@ class HQMFGeneratorTest < Test::Unit::TestCase
 
     criteria = @model.data_criteria('negStatinMedOrderOnDischarge')
     assert criteria.negation
+
+    criteria = @model.data_criteria('principalActiveDiagnosis_AMI')
+    assert_equal criteria.status, "performed"
+
 =begin
     for x in @model.all_data_criteria
       puts ">>> #{x.id} -- #{x.title}"
