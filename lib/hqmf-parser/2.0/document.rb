@@ -69,7 +69,7 @@ module HQMF2
         population['stratification'] = stratifier_id_def.value if stratifier_id_def
 
         {
-          HQMF::PopulationCriteria::IPP => 'patientPopulationCriteria',
+          HQMF::PopulationCriteria::IPP => 'initialPopulationCriteria',
           HQMF::PopulationCriteria::DENOM => 'denominatorCriteria',
           HQMF::PopulationCriteria::NUMER => 'numeratorCriteria',
           HQMF::PopulationCriteria::DENEXCEP => 'denominatorExceptionCriteria',

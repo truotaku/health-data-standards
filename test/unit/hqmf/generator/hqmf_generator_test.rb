@@ -41,6 +41,17 @@ class HQMFGeneratorTest < Test::Unit::TestCase
     criteria = @model.data_criteria('principalActiveDiagnosis_AMI')
     assert_equal criteria.status, "performed"
 
+    all_population_criteria = @model.all_population_criteria
+    assert_equal 5, all_population_criteria.length
+
+    #codes = all_population_criteria.collect {|p| puts "HERE -- #{p.id}"}
+    #%w(IPP DENOM NUMER DENEXCEP).each do |c|
+    #  assert codes.include?(c)
+    #end
+
+    ipp = @model.population_criteria('IPP')
+    assert ipp.conjunction?
+
 =begin
     for x in @model.all_data_criteria
       puts ">>> #{x.id} -- #{x.title}"
