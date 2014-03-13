@@ -32,7 +32,7 @@ module HQMF2
         value_code_system = attribute.at_xpath('./cda:value/@codeSystem', NAMESPACES).try(:value)
         value_name = attribute.at_xpath('./cda:value/cda:displayName/@value', NAMESPACES).try(:value)
 
-        HQMF::Attribute.new(id, code, code_system, text, value, value_type, value_code, value_code_system, value_name,  nil, name)
+        HQMF::Attribute.new(id, code, code_system, value, value_type, value_code, value_code_system, value_name,  nil, name)
       end
       
       # Extract the data criteria

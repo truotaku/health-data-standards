@@ -54,16 +54,21 @@ module HQMF
     end
    
     private
-    
+
     def self.parse_attributes(metadata)
       attributes = []
       metadata.keys.each do |key|
         attribute_hash = metadata[key]
         code = attribute_hash[:code]
+        code_system = attribute_hash[:code_system]
+        value_type = attribute_hash[:value_type]
+        value_code = attribute_hash[:value_code]
+        value_code_system = attribute_hash[:value_code_system]
+        value_name = attribute_hash[:value_name]
         value = attribute_hash[:value]
         unit = attribute_hash[:unit]
         name = attribute_hash[:name]
-        attributes << HQMF::Attribute.new(key,code,nil, nil, value,nil, nil, nil, nil, unit,name)
+        attributes << HQMF::Attribute.new(key,code,code_system,value,value_type,value_code,value_code_system,value_name,unit,name)
       end
       attributes
     end
