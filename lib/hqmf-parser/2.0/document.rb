@@ -23,16 +23,24 @@ module HQMF2
       @attributes = @doc.xpath('/cda:QualityMeasureDocument/cda:subjectOf/cda:measureAttribute', NAMESPACES).collect do |attribute|
         id = attribute.at_xpath('./cda:id/@extension', NAMESPACES).try(:value)
         code = attribute.at_xpath('./cda:code/@code', NAMESPACES).try(:value)
+        if(!code)
+          code = attribute.at_xpath('./cda:code/@nullFlavor', NAMESPACES).try(:value)
+        end
         code_system = attribute.at_xpath('./cda:code/@codeSystem', NAMESPACES).try(:value)
-        text = attribute.at_xpath('./cda:code/cda:originalText/@value', NAMESPACES).try(:value)
         name = attribute.at_xpath('./cda:code/cda:displayName/@value', NAMESPACES).try(:value)
+        if(!name)
+          name = attribute.at_xpath('./cda:code/cda:originalText/@value', NAMESPACES).try(:value)
+        end
         value = attribute.at_xpath('./cda:value/@value', NAMESPACES).try(:value)
+        if(!value)
+          value = attribute.at_xpath('./cda:value', NAMESPACES).try(:inner_text)
+        end
         value_type = attribute.at_xpath('./cda:value/@xsi:type', NAMESPACES).try(:value)
         value_code = attribute.at_xpath('./cda:value/@code', NAMESPACES).try(:value)
         value_code_system = attribute.at_xpath('./cda:value/@codeSystem', NAMESPACES).try(:value)
         value_name = attribute.at_xpath('./cda:value/cda:displayName/@value', NAMESPACES).try(:value)
 
-        HQMF::Attribute.new(id, code, code_system, value, value_type, value_code, value_code_system, value_name,  nil, name)
+        HQMF::Attribute.new(id, code, code_system,value, value_type, value_code, value_code_system, value_name,  nil, name)
       end
       
       # Extract the data criteria

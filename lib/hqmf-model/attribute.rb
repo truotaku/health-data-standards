@@ -1,7 +1,7 @@
 module HQMF
   class Attribute
     include HQMF::Conversion::Utilities
-    attr_reader :id,:code,:code_system,:text,:value,:value_type,:value_code,:value_code_system,:value_name,:unit,:name
+    attr_reader :id,:code,:code_system,:value,:value_type,:value_code,:value_code_system,:value_name,:unit,:name
 
     # @param [String] id
     # @param [String] code
@@ -43,7 +43,7 @@ module HQMF
     end
   
     def to_json
-      json = build_hash(self, [:id,:code,:code_system,:text,:value,:value_type,:value_code,:value_code_system,:value_name,:unit,:name])
+      json = build_hash(self, [:id,:code,:code_system,:value,:value_type,:value_code,:value_code_system,:value_name,:unit,:name])
     end
   
   end
