@@ -35,7 +35,13 @@ class HQMFGeneratorTest < Test::Unit::TestCase
     assert_equal 'Measure Scoring', @model.attributes[2].name
     assert_equal 'For every patient evaluated by this measure also identify payer, race, ethnicity and gender.', @model.attributes[25].value
 
+    criteria = @model.data_criteria('negStatinMedOrderOnDischarge')
+    assert criteria.negation
 =begin
+    for x in @model.all_data_criteria
+      puts ">>> #{x.id} -- #{x.title}"
+    end
+
     criteria = @model.data_criteria('DiabetesMedNotAdministeredForNoStatedReason')
     assert criteria.negation
     assert !criteria.negation_code_list_id

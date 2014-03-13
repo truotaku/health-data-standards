@@ -24,7 +24,7 @@ module HQMF2
       @field_values = extract_field_values
       @subset_operators = extract_subset_operators
       @children_criteria = extract_child_criteria
-      @id_xpath = './*/cda:id/cda:item/@extension'
+      @id_xpath = './*/cda:id/@extension'
       @code_list_xpath = './*/cda:code'
       @value_xpath = './*/cda:value'
       
