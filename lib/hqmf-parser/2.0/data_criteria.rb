@@ -15,7 +15,7 @@ module HQMF2
     def initialize(entry)
       @entry = entry
       @status = attr_val('./*/cda:statusCode/@code')
-      @description = attr_val('./*/cda:text/@value')
+      @description = attr_val('./*[substring(name(),string-length(name())-1) = \'Criteria\']/cda:text/@value')
       extract_negation()
       extract_specific_or_source()
       @effective_time = extract_effective_time
@@ -27,7 +27,6 @@ module HQMF2
       @id_xpath = './*/cda:id/@extension'
       @code_list_xpath = './*/cda:code'
       @value_xpath = './*/cda:value'
-      
       # Try to determine what kind of data criteria we are dealing with
       # First we look for a template id and if we find one just use the definition
       # status and negation associated with that
