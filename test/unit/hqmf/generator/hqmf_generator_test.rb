@@ -22,7 +22,7 @@ class HQMFGeneratorTest < Test::Unit::TestCase
 
     assert_equal 26, @model.attributes.length
     assert_equal '201304011658-0500', @model.attributes[0].value
-    assert_equal 'Finalized Date/Time', @model.attributes[0].text
+    assert_equal 'Finalized Date/Time', @model.attributes[0].name
     assert_equal 'COPY', @model.attributes[1].code
     assert_equal 'Copyright', @model.attributes[1].name
     assert_equal 'Copyright Statement', @model.attributes[1].value
