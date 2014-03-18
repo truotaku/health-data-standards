@@ -52,6 +52,19 @@ class HQMFGeneratorTest < Test::Unit::TestCase
     ipp = @model.population_criteria('IPP')
     assert ipp.conjunction?
 
+    denom = @model.population_criteria('DENOM')
+    assert denom.conjunction?
+    assert_equal denom.title, "Denominator"
+    assert_equal denom.type, "DENOM"
+
+    numer = @model.population_criteria('NUMER')
+    assert numer.conjunction?
+    assert_equal numer.title, "Numerator"
+    assert_equal numer.type, "NUMER"
+
+    denex = @model.population_criteria('DENEX')
+    assert_equal denex.preconditions.size, 1
+
 =begin
     for x in @model.all_data_criteria
       puts ">>> #{x.id} -- #{x.title}"
