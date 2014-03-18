@@ -44,10 +44,10 @@ class HQMFGeneratorTest < Test::Unit::TestCase
     all_population_criteria = @model.all_population_criteria
     assert_equal 5, all_population_criteria.length
 
-    #codes = all_population_criteria.collect {|p| puts "HERE -- #{p.id}"}
-    #%w(IPP DENOM NUMER DENEXCEP).each do |c|
-    #  assert codes.include?(c)
-    #end
+    codes = all_population_criteria.collect {|p| p.id}
+    %w(IPP DENOM NUMER DENEXCEP DENEX).each do |c|
+      assert codes.include?(c)
+    end
 
     ipp = @model.population_criteria('IPP')
     assert ipp.conjunction?

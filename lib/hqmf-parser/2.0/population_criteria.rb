@@ -15,6 +15,9 @@ module HQMF2
       @hqmf_id = attr_val('./*/cda:id/@extension')
       @title = attr_val('./*/cda:code/cda:displayName/@value') 
       @type = attr_val('./*/cda:code/@code')
+      if(!@hqmf_id) # The id extension is not required, if it's not provided use the code
+        @hqmf_id = @type
+      end
       @preconditions = @entry.xpath('./*/cda:precondition[not(@nullFlavor)]', HQMF2::Document::NAMESPACES).collect do |precondition|
         Precondition.new(precondition, @doc)
       end
