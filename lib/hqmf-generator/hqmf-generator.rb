@@ -189,8 +189,15 @@ module HQMF2
           'SBADM'
         when :medication_supply
           'SPLY'
+        when :observation
+           'OBS'
         else
-          'OBS'
+          case referenced_criteria.definition
+          when 'derived'
+            'GROUPER'
+          else
+            'OBS'
+          end
         end
       end
       
@@ -245,6 +252,8 @@ module HQMF2
           'characteristic_criteria'
         when 'variable'
           'variable_criteria'
+        when 'derived'
+          'grouper_criteria'
         else
           'observation_criteria'
         end
@@ -266,7 +275,12 @@ module HQMF2
         when :medication_supply
           'supply'
         else
-          'observation'
+          case data_criteria.definition
+          when 'derived'
+            'grouper'
+          else
+            'observation'
+          end
         end
       end
       
