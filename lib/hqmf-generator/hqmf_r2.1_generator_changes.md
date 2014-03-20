@@ -237,10 +237,13 @@ Move inner text of `text` elements to the `value` attribute.
 Element '{urn:hl7-org:v3}measureAttribute': Missing child element(s). Expected is ( {urn:hl7-org:v3}value ).
 
 ##FIX
-TBD - Currently the value (and some other data) is not being parsed from the r1 measure into the model.
+Add id_obj, code_obj, and value_obj to the model to represent full representations of each concept.  Enhance 1.0
+and 2.0 parsers to parse out the full objects too, while keeping 1.0 backwards compatible.  Since `value` can be
+any type, try to determine type programmatically (also required introduction of `Identifier`, `ED`, and 
+`GenericValueContainer` types).  Update generator to use id_obj, code_obj, and value_obj from the model.
 
 ## REPRESENTATIVE CHANGE
-
+Too many to choose just one representative change.
 
 ## GIT STATUS
 
@@ -251,11 +254,10 @@ TBD - Currently the value (and some other data) is not being parsed from the r1 
 Element '{urn:hl7-org:v3}criteriaReference': This element is not expected. Expected is one of ( {urn:hl7-org:v3}actCriteria, {urn:hl7-org:v3}substanceAdministrationCriteria, {urn:hl7-org:v3}actDefinition, {urn:hl7-org:v3}observationCriteria, {urn:hl7-org:v3}encounterCriteria, {urn:hl7-org:v3}procedureCriteria, {urn:hl7-org:v3}supplyCriteria, {urn:hl7-org:v3}grouperCriteria ).
 
 ##FIX
-TBD - The current code makes use of references here.  It appears that we will need to dereference them and add the original criteria.  May need
-to consider implications regarding duplication of data, etc.
+Use GrouperCriteria instead of ObservationCriteria when the criteria definition is derived (and its not one of the other criteria types).
 
 ## REPRESENTATIVE CHANGE
-
+Too many to choose one representative change.
 
 ## GIT STATUS
 
