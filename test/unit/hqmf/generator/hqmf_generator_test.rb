@@ -21,19 +21,19 @@ class HQMFGeneratorTest < Test::Unit::TestCase
     assert_equal 14, data_criteria.length
 
     assert_equal 26, @model.attributes.length
-    assert_equal '201304011658-0500', @model.attributes[0].value
-    assert_equal 'Finalized Date/Time', @model.attributes[0].name
-    assert_equal 'COPY', @model.attributes[1].code
-    assert_equal 'Copyright', @model.attributes[1].name
-    assert_equal 'Copyright Statement', @model.attributes[1].value
-    assert_equal 'MSRSCORE', @model.attributes[2].code
-    assert_equal '2.16.840.1.113883.5.4', @model.attributes[2].code_system
-    assert_equal 'CD', @model.attributes[2].value_type
-    assert_equal 'Proportion', @model.attributes[2].value_name
-    assert_equal 'PROPOR', @model.attributes[2].value_code
-    assert_equal '2.16.840.1.113883.1.11.20367', @model.attributes[2].value_code_system
-    assert_equal 'Measure Scoring', @model.attributes[2].name
-    assert_equal 'For every patient evaluated by this measure also identify payer, race, ethnicity and gender.', @model.attributes[25].value
+    assert_equal '201304011658-0500', @model.attributes[0].value_obj.value
+    assert_equal 'Finalized Date/Time', @model.attributes[0].code_obj.original_text
+    assert_equal 'COPY', @model.attributes[1].code_obj.code
+    assert_equal 'Copyright', @model.attributes[1].code_obj.title
+    assert_equal 'Copyright Statement', @model.attributes[1].value_obj.value
+    assert_equal 'MSRSCORE', @model.attributes[2].code_obj.code
+    assert_equal '2.16.840.1.113883.5.4', @model.attributes[2].code_obj.system
+    assert_equal HQMF::Coded, @model.attributes[2].value_obj.class
+    assert_equal 'Proportion', @model.attributes[2].value_obj.title
+    assert_equal 'PROPOR', @model.attributes[2].value_obj.code
+    assert_equal '2.16.840.1.113883.1.11.20367', @model.attributes[2].value_obj.system
+    assert_equal 'Measure Scoring', @model.attributes[2].code_obj.title
+    assert_equal 'For every patient evaluated by this measure also identify payer, race, ethnicity and gender.', @model.attributes[25].value_obj.value
 
     criteria = @model.data_criteria('negStatinMedOrderOnDischarge')
     assert criteria.negation

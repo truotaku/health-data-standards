@@ -21,26 +21,44 @@ module HQMF2
       
       # Extract measure attributes
       @attributes = @doc.xpath('/cda:QualityMeasureDocument/cda:subjectOf/cda:measureAttribute', NAMESPACES).collect do |attribute|
-        id = attribute.at_xpath('./cda:id/@extension', NAMESPACES).try(:value)
+        id = attribute.at_xpath('./cda:id/@root', NAMESPACES).try(:value)
         code = attribute.at_xpath('./cda:code/@code', NAMESPACES).try(:value)
-        if(!code)
-          code = attribute.at_xpath('./cda:code/@nullFlavor', NAMESPACES).try(:value)
-        end
-        code_system = attribute.at_xpath('./cda:code/@codeSystem', NAMESPACES).try(:value)
         name = attribute.at_xpath('./cda:code/cda:displayName/@value', NAMESPACES).try(:value)
-        if(!name)
-          name = attribute.at_xpath('./cda:code/cda:originalText/@value', NAMESPACES).try(:value)
-        end
         value = attribute.at_xpath('./cda:value/@value', NAMESPACES).try(:value)
-        if(!value)
-          value = attribute.at_xpath('./cda:value', NAMESPACES).try(:inner_text)
-        end
-        value_type = attribute.at_xpath('./cda:value/@xsi:type', NAMESPACES).try(:value)
-        value_code = attribute.at_xpath('./cda:value/@code', NAMESPACES).try(:value)
-        value_code_system = attribute.at_xpath('./cda:value/@codeSystem', NAMESPACES).try(:value)
-        value_name = attribute.at_xpath('./cda:value/cda:displayName/@value', NAMESPACES).try(:value)
 
-        HQMF::Attribute.new(id, code, code_system,value, value_type, value_code, value_code_system, value_name,  nil, name)
+        id_obj = nil
+        if attribute.at_xpath('./cda:id', NAMESPACES)
+          id_obj = HQMF::Identifier.new(attribute.at_xpath('./cda:id/@xsi:type', NAMESPACES).try(:value), id, attribute.at_xpath('./cda:id/@extension', NAMESPACES).try(:value))
+        end
+
+        code_obj = nil;
+        if attribute.at_xpath('./cda:code', NAMESPACES)
+          oText = attribute.at_xpath('./cda:code/cda:originalText', NAMESPACES) ? attribute.at_xpath('./cda:code/cda:originalText/@value', NAMESPACES).try(:value) : nil
+          code_obj = HQMF::Coded.new(attribute.at_xpath('./cda:code/@xsi:type', NAMESPACES).try(:value) || 'CD',
+                                 attribute.at_xpath('./cda:code/@codeSystem', NAMESPACES).try(:value),
+                                 code,
+                                 attribute.at_xpath('./cda:code/@valueSet', NAMESPACES).try(:value),
+                                 name,
+                                 attribute.at_xpath('./cda:code/@nullFlavor', NAMESPACES).try(:value),
+                                 oText)
+        end
+
+        value_obj = nil
+        if attribute.at_xpath('./cda:value', NAMESPACES)
+          type = attribute.at_xpath('./cda:value/@xsi:type', NAMESPACES).try(:value)
+          case type
+          when 'II'
+            value_obj = HQMF::Identifier.new(type, attribute.at_xpath('./cda:value/@root', NAMESPACES).try(:value), attribute.at_xpath('./cda:value/@extension', NAMESPACES).try(:value))
+          when 'ED'
+            value_obj = HQMF::ED.new(type, value, attribute.at_xpath('./cda:value/@mediaType', NAMESPACES).try(:value))
+          when 'CD'
+            value_obj = HQMF::Coded.new('CD', attribute.at_xpath('./cda:value/@codeSystem', NAMESPACES).try(:value), attribute.at_xpath('./cda:value/@code', NAMESPACES).try(:value), attribute.at_xpath('./cda:value/@valueSet', NAMESPACES).try(:value), attribute.at_xpath('./cda:value/cda:displayName/@value', NAMESPACES).try(:value))
+          else
+            value_obj = value.present? ? HQMF::GenericValueContainer.new(type, value) : HQMF::AnyValue.new(type)
+          end
+        end
+
+        HQMF::Attribute.new(id, code, value, nil, name, id_obj, code_obj, value_obj)
       end
       
       # Extract the data criteria

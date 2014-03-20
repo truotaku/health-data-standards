@@ -9,9 +9,9 @@ module HQMF
       title = json[:title]
       description = json[:description]
       
+      # TODO: Investigate why we never use json[:attributes]
       metadata = json[:metadata]
       metadata.keys.each {|key| metadata[key.to_s] = metadata[key]; metadata.delete(key.to_sym)}
-      
       id = metadata["NQF_ID_NUMBER"][:value] if metadata["NQF_ID_NUMBER"]
       emeasure_id = metadata['EMEASURE_IDENTIFIER'][:value] if metadata['EMEASURE_IDENTIFIER']
       attributes = parse_attributes(metadata)
@@ -58,17 +58,7 @@ module HQMF
     def self.parse_attributes(metadata)
       attributes = []
       metadata.keys.each do |key|
-        attribute_hash = metadata[key]
-        code = attribute_hash[:code]
-        code_system = attribute_hash[:code_system]
-        value_type = attribute_hash[:value_type]
-        value_code = attribute_hash[:value_code]
-        value_code_system = attribute_hash[:value_code_system]
-        value_name = attribute_hash[:value_name]
-        value = attribute_hash[:value]
-        unit = attribute_hash[:unit]
-        name = attribute_hash[:name]
-        attributes << HQMF::Attribute.new(key,code,code_system,value,value_type,value_code,value_code_system,value_name,unit,name)
+        attributes << HQMF::Attribute.from_json(metadata[key])
       end
       attributes
     end
