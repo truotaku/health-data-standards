@@ -246,7 +246,18 @@ any type, try to determine type programmatically (also required introduction of 
 Too many to choose just one representative change.
 
 ## GIT STATUS
-
+    modified   lib/hqmf-generator/attribute.xml.erb
+    modified   lib/hqmf-generator/code.xml.erb
+    modified   lib/hqmf-generator/value.xml.erb
+    modified   lib/hqmf-model/attribute.rb
+    modified   lib/hqmf-model/types.rb
+    modified   lib/hqmf-parser/1.0/attribute.rb
+    modified   lib/hqmf-parser/1.0/document.rb
+    modified   lib/hqmf-parser/2.0/document.rb
+    modified   lib/hqmf-parser/converter/pass1/document_converter.rb
+    modified   test/unit/hqmf/2.0/document_v2_test.rb
+    modified   test/unit/hqmf/generator/hqmf_generator_test.rb
+    modified   test/unit/hqmf/model/hqmf_v1_v2_generation_test.rb
 
 -------------------------------------------------------------------------------
 
@@ -260,7 +271,10 @@ Use GrouperCriteria instead of ObservationCriteria when the criteria definition 
 Too many to choose one representative change.
 
 ## GIT STATUS
-
+    new file:   lib/hqmf-generator/grouper_criteria.xml.erb
+    modified:   lib/hqmf-generator/hqmf-generator.rb
+    modified:   lib/hqmf-generator/subset.xml.erb
+    modified:   test/unit/hqmf/model/hqmf_v1_v2_generation_test.rb
 
 -------------------------------------------------------------------------------
 
