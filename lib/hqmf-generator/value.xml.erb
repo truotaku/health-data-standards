@@ -12,12 +12,24 @@
     <%- end -%>
   </<%= name %>>
 <%- elsif value.class==HQMF::Coded -%>
-  <%- if value.code_list_id -%>
-  <<%= name %> xsi:type="<%= value.type %>" valueSet="<%= value.code_list_id %>">
+  <%- if value.null_flavor -%>
+    <<%= name %> nullFlavor="<%= value.null_flavor %>">
+    <%- if value.original_text -%>
+      <originalText value="<%= value.original_text %>"/>
+    <%- end -%>
   <%- else -%>
-  <<%= name %> xsi:type="<%= value.type %>" codeSystem="<%= value.system %>" code="<%= value.code %>">
+    <%- if value.code_list_id -%>
+  <<%= name %> <%= "xsi:type=\"#{value.type}\"" if include_type %> valueSet="<%= value.code_list_id %>">
+    <%- else -%>
+  <<%= name %> <%= "xsi:type=\"#{value.type}\"" if include_type %> codeSystem="<%= value.system %>" code="<%= value.code %>">
+    <%- end -%>
+    <%- if value.title -%>
+      <displayName value="<%=ERB::Util::h value.title %>"/>
+    <%- end -%>
+    <%- if value.original_text -%>
+      <originalText value="<%= value.original_text %>"/>
+    <%- end -%> 
   <%- end -%>
-     <displayName value="<%=ERB::Util::h value.title %>"/>
   </<%= name %>>
 <%- elsif value.class==HQMF::Value -%>
   <%- if value.derived? -%>
@@ -27,6 +39,12 @@
   <%- else -%>
   <<%= name %> <%= "xsi:type=\"#{value.type}\"" if include_type %> value="<%= value.value %>"<%= " unit=\"#{value.unit}\"" if value.unit %>/>
   <%- end -%>
+<%- elsif value.class==HQMF::Identifier -%>
+  <<%= name %> xsi:type="II" root="<%= value.root %>"<%= " extension=\"#{value.extension}\"" if value.extension %>/>
+<%- elsif value.class==HQMF::ED -%>
+  <<%= name %> xsi:type="ED" mediaType="<%= value.media_type || 'text/plain' %>"<%= " value=\"#{ERB::Util::h value.value}\"" if value.value %>/>
+<%- elsif value.class==HQMF::GenericValueContainer -%>
+  <<%= name %> <%="xsi:type=\"#{value.type}\"" if value.type %> value="<%=ERB::Util::h value.value %>"/>
 <%- elsif value.class==HQMF::AnyValue -%>
   <<%= name %> xsi:type="ANY" nullFlavor="NI"/>
 <%- end -%>

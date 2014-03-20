@@ -33,17 +33,23 @@ require_relative '../../../test_helper'
   
     def test_attributes
       assert_equal 1, @doc.attributes.length
-      assert_equal 'COPYRIGHT', @doc.attributes[0].id
+      assert_equal 'COPYRIGHT', @doc.attributes[0].id_obj.extension
+      assert_equal 'COPY', @doc.attributes[0].code_obj.code
       assert_equal 'COPY', @doc.attributes[0].code
+      assert_equal 'Copyright', @doc.attributes[0].code_obj.title
       assert_equal 'Copyright', @doc.attributes[0].name
+      assert_equal 'Copyright Statement', @doc.attributes[0].value_obj.value
       assert_equal 'Copyright Statement', @doc.attributes[0].value
     end
 
     def test_model_attributes
       assert_equal 1, @model.attributes.length
-      assert_equal 'COPYRIGHT', @model.attributes[0].id
+      assert_equal 'COPYRIGHT', @model.attributes[0].id_obj.extension
+      assert_equal 'COPY', @model.attributes[0].code_obj.code
       assert_equal 'COPY', @model.attributes[0].code
+      assert_equal 'Copyright', @model.attributes[0].code_obj.title
       assert_equal 'Copyright', @model.attributes[0].name
+      assert_equal 'Copyright Statement', @model.attributes[0].value_obj.value
       assert_equal 'Copyright Statement', @model.attributes[0].value
     end
 

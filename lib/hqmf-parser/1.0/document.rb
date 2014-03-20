@@ -169,6 +169,7 @@ module HQMF1
         json[:data_criteria].merge! criteria_json
       end
       
+      # TODO: Investigate why we never use json[:attributes] in the model
       json[:metadata] = {}
       json[:attributes] = {}
       @attributes.each do |attribute|
