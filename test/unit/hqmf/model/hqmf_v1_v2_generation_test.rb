@@ -32,18 +32,20 @@ class HQMFV1V2GenerationTest < Test::Unit::TestCase
       num_total_errors = @@result_map.values.inject(0) { |sum, n | n > 0 ? sum + n : sum }
       File.open(SUMMARY_FILE, 'w') do | file |
         file.write(sprintf("Total Measures: %6d\n", @@num_total_tests))
-        file.write(sprintf("Total Failed:   %6d\n", num_failed_tests))
+        file.write(sprintf("Total Skipped:  %6d\n", num_failed_tests))
         file.write(sprintf("Total Errors:   %6d\n\n", num_total_errors))
         file.write "Measure Name                  Number of Errors\n"
         file.write "----------------------------------------------\n"
         @@result_map.each_pair do | measure_name, num_errors |
-          file.write(sprintf("%-28s  %16s\n", measure_name, num_errors >= 0 ? num_errors.to_s : 'error'))
+          file.write(sprintf("%-28s  %16s\n", measure_name, num_errors >= 0 ? num_errors.to_s : 'N/A'))
         end
-        file.write "\n\n"
-        file.write "Count    Error Message\n"
-        file.write "--------------------------------------------------------------------------------\n"
-        @@error_type_map.sort_by {|k,v| v}.reverse.each do |err, count|
-          file.write(sprintf("%-8d %s\n", count, err))
+        unless (@@error_type_map.empty?)
+          file.write "\n\n"
+          file.write "Count    Error Message\n"
+          file.write "--------------------------------------------------------------------------------\n"
+          @@error_type_map.sort_by {|k,v| v}.reverse.each do |err, count|
+            file.write(sprintf("%-8d %s\n", count, err))
+          end
         end
       end
     end
@@ -52,6 +54,9 @@ class HQMFV1V2GenerationTest < Test::Unit::TestCase
   def do_validation_test(measure_filename, measure_name)
     # open the v1 file and generate a v2.1 xml string
     v1_model = HQMF::Parser.parse(File.open(measure_filename).read, '1.0')
+
+    skip('Continuous Variable measures currently not supported') if v1_model.population_criteria('MSRPOPL')
+
     hqmf_xml = HQMF2::Generator::ModelProcessor.to_hqmf(v1_model)
 
     # save the 2.1 xml to a file for further analysis
