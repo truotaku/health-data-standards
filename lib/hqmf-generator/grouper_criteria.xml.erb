@@ -9,13 +9,8 @@
             </criteriaReference>
           </definition>
           <%= xml_for_temporal_references(criteria) %> 
-          <%- criteria.children_criteria.each do |child_id| -%>
-            <outboundRelationship typeCode="COMP">
-              <conjunctionCode code="<%= criteria.derivation_operator == 'UNION' ? 'OR' : 'AND' %>"/>
-              <%= xml_for_reference_id(child_id) %>
-            </outboundRelationship>
-          <%- end -%>       
           <%= xml_for_fields(criteria) %>
+          <%= xml_for_derivation(criteria) %>
           <%= xml_for_subsets(criteria) %>
         </grouperCriteria>
       </entry>

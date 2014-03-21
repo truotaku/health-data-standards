@@ -159,6 +159,13 @@ module HQMF2
         end
         refs.join
       end
+
+      def data_criteria_should_be_grouper?(criteria)
+        return false unless criteria
+        return false unless criteria.definition == 'derived'
+        return true unless criteria.subset_operators
+        criteria.subset_operators.all? {|o| o.supports_grouper_criteria?}
+      end
       
       def oid_for_name(code_system_name)
         HealthDataStandards::Util::CodeSystemHelper.oid_for_code_system(code_system_name)
@@ -192,8 +199,7 @@ module HQMF2
         when :observation
            'OBS'
         else
-          case referenced_criteria.definition
-          when 'derived'
+          if data_criteria_should_be_grouper?(referenced_criteria)
             'GROUPER'
           else
             'OBS'
@@ -253,7 +259,11 @@ module HQMF2
         when 'variable'
           'variable_criteria'
         when 'derived'
-          'grouper_criteria'
+          if data_criteria_should_be_grouper?(data_criteria)
+            'grouper_criteria'
+          else
+            'observation_criteria'
+          end
         else
           'observation_criteria'
         end
@@ -275,8 +285,7 @@ module HQMF2
         when :medication_supply
           'supply'
         else
-          case data_criteria.definition
-          when 'derived'
+          if data_criteria_should_be_grouper?(data_criteria)
             'grouper'
           else
             'observation'
