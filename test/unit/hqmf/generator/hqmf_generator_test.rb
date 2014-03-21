@@ -65,6 +65,54 @@ class HQMFGeneratorTest < Test::Unit::TestCase
     denex = @model.population_criteria('DENEX')
     assert_equal denex.preconditions.size, 1
 
+    criteria = @model.data_criteria('statinMedOrderOnDischarge')
+    assert_nil criteria.status
+    assert criteria.title, "statinMedOrderOnDischarge"
+
+    criteria = @model.data_criteria('principalActiveDiagnosis_AMI')
+    assert criteria.status, "performed"
+    assert criteria.title, "Problem"
+ 
+    criteria = @model.data_criteria('inpatientEncounterAMI')
+    assert criteria.status, "performed"
+    assert criteria.title, "Encounter Inpatient SNOMED-CT Value Set"
+
+    criteria = @model.data_criteria('PatientCharacteristicBirthdate')
+    assert_nil criteria.status
+    assert criteria.title, "birth date"
+
+    criteria = @model.data_criteria('clinicalTrialParticipant')
+    assert_nil criteria.status
+    assert criteria.title, "Clinical Trial Participant"
+
+    criteria = @model.data_criteria('InterventionPerformedComfortMeasureOnly')
+    assert_nil criteria.status
+    assert criteria.title, "Hospital Measures - Comfort Measure Only Intervention SNOMED-CT Value Set"
+
+    criteria = @model.data_criteria('dischargedDuringInpatientEncounterAMI')
+    assert_nil criteria.status
+    assert criteria.title, "dischargedDuringInpatientEncounterAMI"
+
+    criteria = @model.data_criteria('LDLResultLessThan100_24hr')
+    assert criteria.status, "performed"
+    assert criteria.title, "LDL-c LOINC Value Set"
+
+    criteria = @model.data_criteria('LDLResultLessThan100_30d')
+    assert criteria.status, "performed"
+    assert criteria.title, "LDL-c LOINC Value Set"
+
+    criteria = @model.data_criteria('negStatinMedOrderOnDischarge')
+    assert_nil criteria.status
+    assert criteria.title, "negStatinMedOrderOnDischarge"
+
+    criteria = @model.data_criteria('negActiveDischargeMedStatin')
+    assert criteria.status, "active"
+    assert criteria.title, "Discharge Medication"
+
+    criteria = @model.data_criteria('noStatinsWithMedicalReason')
+    assert_nil criteria.status
+    assert criteria.title, "noStatinsWithMedicalReason"
+    
 =begin
     for x in @model.all_data_criteria
       puts ">>> #{x.id} -- #{x.title}"
