@@ -257,7 +257,6 @@ Too many to choose just one representative change.
     modified   lib/hqmf-parser/converter/pass1/document_converter.rb
     modified   test/unit/hqmf/2.0/document_v2_test.rb
     modified   test/unit/hqmf/generator/hqmf_generator_test.rb
-    modified   test/unit/hqmf/model/hqmf_v1_v2_generation_test.rb
 
 -------------------------------------------------------------------------------
 
@@ -266,15 +265,19 @@ Element '{urn:hl7-org:v3}criteriaReference': This element is not expected. Expec
 
 ##FIX
 Use GrouperCriteria instead of ObservationCriteria when the criteria definition is derived (and its not one of the other criteria types).
+Some subset operators (COUNT, SUM, MIN, MAX, MEAN, MEDIAN) however cannot be represented in a GrouperCriteria, so default to
+ObservationCriteria in those cases.
 
 ## REPRESENTATIVE CHANGE
 Too many to choose one representative change.
 
 ## GIT STATUS
+    modified:   lib/hqmf-generator/derivation.xml.erb
     new file:   lib/hqmf-generator/grouper_criteria.xml.erb
     modified:   lib/hqmf-generator/hqmf-generator.rb
     modified:   lib/hqmf-generator/subset.xml.erb
-    modified:   test/unit/hqmf/model/hqmf_v1_v2_generation_test.rb
+    modified:   lib/hqmf-model/types.rb
+
 
 -------------------------------------------------------------------------------
 

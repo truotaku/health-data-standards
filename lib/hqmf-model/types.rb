@@ -279,6 +279,10 @@ module HQMF
       end
     end
     
+    def supports_grouper_criteria?
+      ['FIRST', 'SECOND', 'THIRD', 'FOURTH', 'FIFTH', 'RECENT', 'LAST'].include? @type
+    end
+
     def self.from_json(json)
       type = json["type"] if json["type"]
 
