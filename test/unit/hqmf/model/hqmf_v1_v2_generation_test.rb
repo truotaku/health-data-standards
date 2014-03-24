@@ -2,7 +2,7 @@ require 'fileutils'
 require_relative '../../../test_helper'
 
 class HQMFV1V2GenerationTest < Test::Unit::TestCase
-  RESULTS_DIR = 'test/fixtures/1.0/measures/hqmf_r2.1_results'
+  RESULTS_DIR = 'tmp/hqmf_r2.1_results'
   SUMMARY_FILE = "#{RESULTS_DIR}/summary.txt"
   XSD = Nokogiri::XML.Schema(File.open('test/fixtures/2.1/schemas/EMeasure.xsd'))
 
@@ -12,7 +12,7 @@ class HQMFV1V2GenerationTest < Test::Unit::TestCase
 
   # Create a blank folder for the errors
   FileUtils.rm_rf(RESULTS_DIR) if File.directory?(RESULTS_DIR)
-  Dir.mkdir RESULTS_DIR
+  FileUtils.mkdir_p RESULTS_DIR
 
   # Automatically generate one test method per measure file
   @@num_total_tests = 0
