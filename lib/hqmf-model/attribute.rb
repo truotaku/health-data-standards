@@ -44,7 +44,7 @@ module HQMF
         when 'ED'
           value_obj = HQMF::ED::from_json(json_value)
         else
-          value_obj = json_value["value"].nil? ? HQMF::Any::from_json(json_value) : HQMF::GenericValueContainer::from_json(json_value)
+          value_obj = json_value["value"].nil? ? HQMF::AnyValue::from_json(json_value) : HQMF::GenericValueContainer::from_json(json_value)
         end
       end
 
