@@ -28,12 +28,7 @@ module HQMF2
     end
     
     def inclusive?
-      case attr_val('./@inclusive')
-      when 'false'
-        false
-      else
-        true
-      end
+      attr_val("../@#{@entry.name}Closed") == 'true'
     end
     
     def derived?
@@ -67,9 +62,9 @@ module HQMF2
       @type = type
       @entry = entry
       if @entry
-        @low = optional_value('./cda:phase/cda:low', default_bounds_type)
-        @high = optional_value('./cda:phase/cda:high', default_bounds_type)
-        @width = optional_value('./cda:phase/cda:width', 'PQ')
+        @low = optional_value("./cda:#{default_element_name}/cda:low", default_bounds_type)
+        @high = optional_value("./cda:#{default_element_name}/cda:high", default_bounds_type)
+        @width = optional_value("./cda:#{default_element_name}/cda:width", 'PQ')
       end
     end
     
@@ -92,6 +87,15 @@ module HQMF2
         Value.new(value_def, type)
       else
         nil
+      end
+    end
+
+    def default_element_name
+      case type
+      when 'IVL_TS'
+        'phase'
+      else
+        'uncertainRange'
       end
     end
     
@@ -193,7 +197,7 @@ module HQMF2
       @reference = Reference.new(@entry.at_xpath('./*/cda:id', HQMF2::Document::NAMESPACES))
       range_def = @entry.at_xpath('./cda:pauseQuantity', HQMF2::Document::NAMESPACES)
       if range_def
-        @range = HQMF2::Range.new(range_def, 'IVL_PQ')
+        @range = HQMF2::Range.new(range_def, 'PQ')
       end
     end
     

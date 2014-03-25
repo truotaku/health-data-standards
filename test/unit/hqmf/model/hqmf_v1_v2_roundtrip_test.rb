@@ -40,6 +40,8 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
       File.open(outfile, 'w') {|f| f.write(JSON.pretty_generate(v1_json)) }
       outfile = File.join("#{RESULTS_DIR}","#{measure_name}_r2.json")
       File.open(outfile, 'w') {|f| f.write(JSON.pretty_generate(v2_json)) }
+      outfile = File.join("#{RESULTS_DIR}","#{measure_name}_r2.xml")
+      File.open(outfile, 'w') {|f| f.write(hqmf_xml) }
     end
 
     assert diff.empty?, 'Differences in model after roundtrip to HQMF V2'
@@ -64,6 +66,9 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
 
     # v2 switches negated preconditions non-negated equivalents (atLeastOneTrue[negated] -> allFalse)
     fix_precondition_negations(v1_json['population_criteria'])
+
+    # v2 ranges (in pauseQuantity) cannot be IVL_PQ, so change to PQ
+    fix_range_types(v1_json)
   end
 
   def fix_precondition_negations(root)
@@ -77,6 +82,24 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
         fix_precondition_negations(value)
       elsif value.is_a? Array
         value.each {|entry| fix_precondition_negations(entry) if entry.is_a? Hash}
+      end
+    end
+  end
+
+  def fix_range_types(root)
+    if (root['temporal_references'])
+      root['temporal_references'].each do |tr|
+        if tr['range'] && tr['range']['type'] == 'IVL_PQ'
+          tr['range']['type'] = 'PQ'
+        end
+      end
+    end
+
+    root.each_pair do |key, value|
+      if value.is_a? Hash
+        fix_range_types(value)
+      elsif value.is_a? Array and key != 'temporal_references'
+        value.each {|entry| fix_range_types(entry) if entry.is_a? Hash}
       end
     end
   end
