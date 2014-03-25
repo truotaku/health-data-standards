@@ -167,7 +167,13 @@ module HQMF
       end
       used_dc
     end
-    
+
+    # Get a specific attribute by code.
+    # @param [String] code the attribute code
+    # @return [HQMF1::Attribute] the matching attribute, raises an Exception if not found
+    def attribute_for_code(code)
+      @attributes.find_all { |e| e.send(:code) == code }
+    end
     
     # Get a specific data criteria by id.
     # @param [String] id the data criteria identifier
