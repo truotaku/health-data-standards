@@ -231,11 +231,11 @@ module HQMF2
       specific_def = @entry.at_xpath('./*/cda:outboundRelationship[cda:subsetCode/@code="SPECIFIC"]', HQMF2::Document::NAMESPACES)
       source_def = @entry.at_xpath('./*/cda:outboundRelationship[cda:subsetCode/@code="SOURCE"]', HQMF2::Document::NAMESPACES)
       if specific_def
-        @source_data_criteria = HQMF2::Utilities.attr_val(specific_def, './cda:observationReference/cda:id/@extension')
+        @source_data_criteria = HQMF2::Utilities.attr_val(specific_def, './cda:criteriaReference/cda:id/@extension')
         @specific_occurrence_const = HQMF2::Utilities.attr_val(specific_def, './cda:localVariableName/@controlInformationRoot')
         @specific_occurrence = HQMF2::Utilities.attr_val(specific_def, './cda:localVariableName/@controlInformationExtension')
       elsif source_def
-        @source_data_criteria = HQMF2::Utilities.attr_val(source_def, './cda:observationReference/cda:id/@extension')
+        @source_data_criteria = HQMF2::Utilities.attr_val(source_def, './cda:criteriaReference/cda:id/@extension')
       end
     end
     
