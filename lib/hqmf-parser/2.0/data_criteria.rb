@@ -15,7 +15,7 @@ module HQMF2
     def initialize(entry)
       @entry = entry
       @status = attr_val('./*/cda:statusCode/@code')
-      @description = attr_val('./*[substring(name(),string-length(name())-1) = \'Criteria\']/cda:text/@value')
+      @description = attr_val('./*[substring(name(),string-length(name())-7) = \'Criteria\']/cda:text/@value')
       extract_negation()
       extract_specific_or_source()
       @effective_time = extract_effective_time
