@@ -168,8 +168,9 @@ module HQMF
       used_dc
     end
 
-    # Get a specific attribute by code.
+    # Get specific attributes by code.
     # @param [String] code the attribute code
+    # @param [String] code_system the attribute code system
     # @return [Array#Attribute] the matching attributes, raises an Exception if not found
     def attributes_for_code(code, code_system)
       @attributes.find_all { |e| e.send(:code) == code && e.send(:code_obj).send(:system) == code_system }

@@ -35,6 +35,21 @@ class HQMFGeneratorTest < Test::Unit::TestCase
     assert_equal 'Measure Scoring', @model.attributes[2].code_obj.title
     assert_equal 'For every patient evaluated by this measure also identify payer, race, ethnicity and gender.', @model.attributes[25].value_obj.value
 
+    ref_attrs = @model.attributes_for_code("REF", "2.16.840.1.113883.5.4")
+    assert_equal ref_attrs.count, 9
+
+    for a in ref_attrs
+      code_obj = a.code_obj
+      value_obj = a.value_obj
+      assert_equal a.code, "REF"
+      assert_equal code_obj.system,  "2.16.840.1.113883.5.4"
+      assert_equal value_obj.class, HQMF::ED
+      assert_equal code_obj.class, HQMF::Coded
+      assert_equal value_obj.media_type, "text/plain"
+      assert_operator a.value.length, :>, 10
+      assert_equal a.name, "Reference"
+    end
+
     criteria = @model.data_criteria('negStatinMedOrderOnDischarge')
     assert criteria.negation
 
@@ -42,7 +57,7 @@ class HQMFGeneratorTest < Test::Unit::TestCase
     assert_equal criteria.status, "performed"
 
     all_population_criteria = @model.all_population_criteria
-    assert_equal 5, all_population_criteria.length
+    assert_equal all_population_criteria.length, 5
 
     codes = all_population_criteria.collect {|p| p.id}
     %w(IPP DENOM NUMER DENEXCEP DENEX).each do |c|
