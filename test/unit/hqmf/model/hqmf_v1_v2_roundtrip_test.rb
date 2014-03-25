@@ -29,19 +29,7 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
     v1_json = JSON.parse(v1_model.to_json.to_json)
     v2_json = JSON.parse(v2_model.to_json.to_json)
 
-    # remove measure period width
-    v1_json['measure_period']['width'] = nil
-    
-    # remove embedded whitespace formatting in attribute values
-    v1_json['attributes'].each do |attr|
-      if attr['value']
-        attr['value'].gsub!("\r\n", ' ')
-      end
-    end
-
-    # drop the CMS ID since it does not go into the HQMF v2
-    puts "\t CMS ID ingnored in hqmf v2"
-    v1_json['cms_id'] = nil
+    update_v1_json(v1_json)
 
     diff = v1_json.diff_hash(v2_json, true, true)
 
@@ -55,5 +43,41 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
     end
 
     assert diff.empty?, 'Differences in model after roundtrip to HQMF V2'
+  end
+
+  def update_v1_json(v1_json)
+    # remove measure period width
+    v1_json['measure_period']['width'] = nil
+    
+    # remove embedded whitespace formatting in attribute values
+    v1_json['attributes'].each do |attr|
+      if attr['value']
+        attr['value'].gsub!("\r\n", ' ')
+      end
+    end
+
+    # drop the CMS ID since it does not go into the HQMF v2
+    if v1_json['cms_id']
+      puts "\t CMS ID ignored in hqmf v2"
+      v1_json['cms_id'] = nil
+    end
+
+    # v2 switches negated preconditions non-negated equivalents (atLeastOneTrue[negated] -> allFalse)
+    fix_precondition_negations(v1_json['population_criteria'])
+  end
+
+  def fix_precondition_negations(root)
+    if (HQMF::Precondition::NEGATIONS.keys.include?(root['conjunction_code']) && root['negation'])
+      root['conjunction_code'] = HQMF::Precondition::NEGATIONS[root['conjunction_code']]
+      root.delete('negation')
+    end
+
+    root.each_value do |value|
+      if value.is_a? Hash
+        fix_precondition_negations(value)
+      elsif value.is_a? Array
+        value.each {|entry| fix_precondition_negations(entry) if entry.is_a? Hash}
+      end
+    end
   end
 end
