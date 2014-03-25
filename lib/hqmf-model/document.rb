@@ -170,9 +170,9 @@ module HQMF
 
     # Get a specific attribute by code.
     # @param [String] code the attribute code
-    # @return [HQMF1::Attribute] the matching attribute, raises an Exception if not found
-    def attribute_for_code(code)
-      @attributes.find_all { |e| e.send(:code) == code }
+    # @return [Array#Attribute] the matching attributes, raises an Exception if not found
+    def attributes_for_code(code, code_system)
+      @attributes.find_all { |e| e.send(:code) == code && e.send(:code_obj).send(:system) == code_system }
     end
     
     # Get a specific data criteria by id.
