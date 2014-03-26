@@ -61,6 +61,9 @@ module HQMF2
           case type
           when 'II'
             value_obj = HQMF::Identifier.new(type, attribute.at_xpath('./cda:value/@root', NAMESPACES).try(:value), attribute.at_xpath('./cda:value/@extension', NAMESPACES).try(:value))
+            if value == nil
+              value = attribute.at_xpath('./cda:value/@extension', NAMESPACES).try(:value)
+            end
           when 'ED'
             value_obj = HQMF::ED.new(type, value, attribute.at_xpath('./cda:value/@mediaType', NAMESPACES).try(:value))
           when 'CD'
