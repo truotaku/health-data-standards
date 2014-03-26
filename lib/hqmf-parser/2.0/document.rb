@@ -43,9 +43,14 @@ module HQMF2
                                  nullFlavor,
                                  oText)
 
+
           # Mapping for nil values to align with 1.0 parsing
           if code == nil
             code = nullFlavor
+          end
+
+          if name == nil
+            name = oText
           end
 
         end
