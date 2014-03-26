@@ -33,14 +33,21 @@ module HQMF2
 
         code_obj = nil;
         if attribute.at_xpath('./cda:code', NAMESPACES)
+          nullFlavor = attribute.at_xpath('./cda:code/@nullFlavor', NAMESPACES).try(:value)
           oText = attribute.at_xpath('./cda:code/cda:originalText', NAMESPACES) ? attribute.at_xpath('./cda:code/cda:originalText/@value', NAMESPACES).try(:value) : nil
           code_obj = HQMF::Coded.new(attribute.at_xpath('./cda:code/@xsi:type', NAMESPACES).try(:value) || 'CD',
                                  attribute.at_xpath('./cda:code/@codeSystem', NAMESPACES).try(:value),
                                  code,
                                  attribute.at_xpath('./cda:code/@valueSet', NAMESPACES).try(:value),
                                  name,
-                                 attribute.at_xpath('./cda:code/@nullFlavor', NAMESPACES).try(:value),
+                                 nullFlavor,
                                  oText)
+
+          # Mapping for nil values to align with 1.0 parsing
+          if code == nil
+            code = nullFlavor
+          end
+
         end
 
         value_obj = nil
