@@ -49,7 +49,8 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
 
   def update_v1_json(v1_json)
     # remove measure period width
-    v1_json['measure_period']['width'] = nil
+    #v1_json['measure_period']['width'] = nil
+    v1_json['measure_period']['width']['inclusive?'] = false
     
     # remove embedded whitespace formatting in attribute values
     v1_json['attributes'].each do |attr|
