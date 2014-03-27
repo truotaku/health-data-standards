@@ -198,7 +198,7 @@ module HQMF2
     end
     
     def extract_child_criteria
-      @entry.xpath('./*/cda:excerpt/*/cda:id', HQMF2::Document::NAMESPACES).collect do |ref|
+      @entry.xpath("./*/cda:outboundRelationship[@typeCode='COMP']/cda:criteriaReference/cda:id", HQMF2::Document::NAMESPACES).collect do |ref|
         Reference.new(ref).id
       end.compact
     end
