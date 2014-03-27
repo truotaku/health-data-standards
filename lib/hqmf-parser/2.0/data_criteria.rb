@@ -10,6 +10,11 @@ module HQMF2
     attr_reader :field_values, :source_data_criteria, :specific_occurrence_const
     attr_reader :specific_occurrence, :is_source_data_criteria
   
+    CONJUNCTION_CODE_TO_DERIVATION_OP = {
+      'OR' => 'UNION',
+      'AND' => 'XPRODUCT'
+    }
+
     # Create a new instance based on the supplied HQMF entry
     # @param [Nokogiri::XML::Element] entry the parsed HQMF entry
     def initialize(entry)
@@ -214,11 +219,11 @@ module HQMF2
     end
     
     def extract_derivation_operator
-      derivation_operators = all_subset_operators.select do |operator|
-        ['UNION', 'XPRODUCT'].include?(operator.type)
+      codes = @entry.xpath("./*/cda:outboundRelationship[@typeCode='COMP']/cda:conjunctionCode/@code", HQMF2::Document::NAMESPACES)
+      codes.inject(nil) do | d_op, code |
+        raise "More than one derivation operator in data criteria" if d_op && d_op != CONJUNCTION_CODE_TO_DERIVATION_OP[code.value]
+        CONJUNCTION_CODE_TO_DERIVATION_OP[code.value]
       end
-      raise "More than one derivation operator in data criteria" if derivation_operators.size>1
-      derivation_operators.first ? derivation_operators.first.type : nil
     end
     
     def extract_subset_operators
