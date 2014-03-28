@@ -9,7 +9,7 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
   Dir.mkdir RESULTS_DIR
 
   # Automatically generate one test method per measure file
-  measure_files = File.join('test', 'fixtures', '1.0', 'measures', 'e{p,h}_0033.xml')
+  measure_files = File.join('test', 'fixtures', '1.0', 'measures', 'e{p,h}_0022.xml')
   Dir.glob(measure_files).each do | measure_filename |
     measure_name = /.*[\/\\]((ep|eh)_.*)\.xml/.match(measure_filename)[1]
     define_method("test_#{measure_name}") do
@@ -18,6 +18,7 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
   end
 
   def do_roundtrip_test(measure_filename, measure_name)
+    puts ">> #{measure_name}"
     # open the v1 file and generate a v2.1 xml string
     v1_model = HQMF::Parser.parse(File.open(measure_filename).read, '1.0')
 
@@ -52,7 +53,10 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
     #v1_json['measure_period']['width'] = nil
     v1_json['measure_period']['width']['inclusive?'] = false
     
-    # remove embedded whitespace formatting in attribute values
+    # remove embedded whitespace formatting in values
+    if v1_json['description']
+      v1_json['description'].gsub!(/\n/, ' ')
+    end
     v1_json['attributes'].each do |attr|
       if attr['value']
         attr['value'].gsub!(/\n/, ' ')
