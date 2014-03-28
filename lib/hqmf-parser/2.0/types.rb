@@ -62,9 +62,9 @@ module HQMF2
       @type = type
       @entry = entry
       if @entry
-        @low = optional_value("./cda:#{default_element_name}/cda:low", default_bounds_type)
-        @high = optional_value("./cda:#{default_element_name}/cda:high", default_bounds_type)
-        @width = optional_value("./cda:#{default_element_name}/cda:width", 'PQ')
+        @low = optional_value("#{default_element_name}/cda:low", default_bounds_type)
+        @high = optional_value("#{default_element_name}/cda:high", default_bounds_type)
+        @width = optional_value("#{default_element_name}/cda:width", 'PQ')
       end
     end
     
@@ -92,10 +92,12 @@ module HQMF2
 
     def default_element_name
       case type
+      when 'IVL_PQ'
+        '.'
       when 'IVL_TS'
-        'phase'
+        'cda:phase'
       else
-        'uncertainRange'
+        'cda:uncertainRange'
       end
     end
     
