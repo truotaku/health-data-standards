@@ -55,14 +55,14 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
     
     # remove embedded whitespace formatting in values
     if v1_json['description']
-      v1_json['description'].gsub!(/\n/, ' ')
+      v1_json['description'].gsub!(/\n|\t/, ' ')
     end
     v1_json['attributes'].each do |attr|
       if attr['value']
-        attr['value'].gsub!(/\n/, ' ')
+        attr['value'].gsub!(/\n|\t/, ' ')
       end
       if attr['value_obj'] && attr['value_obj']['value']
-        attr['value_obj']['value'].gsub!(/\n/, ' ')
+        attr['value_obj']['value'].gsub!(/\n|\t/, ' ')
       end
     end
 
