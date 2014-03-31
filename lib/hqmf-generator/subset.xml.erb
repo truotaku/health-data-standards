@@ -4,7 +4,11 @@
             <id root="2.16.840.1.113883.3.100.1" extension="<%= criteria.id %>"/>
             <%- if subset.value -%>
               <%- if subset.type == 'COUNT' -%>
-                <%= xml_for_value(subset.value, 'repeatNumber', false) %>
+                <repeatNumber <%= "lowClosed=\"true\"" if subset.value.low && subset.value.low.inclusive? %> 
+                              <%= "highClosed=\"true\"" if subset.value.high && subset.value.high.inclusive? %>>
+                   <%= xml_for_value(subset.value.low, 'low') if subset.value.low -%>
+                   <%= xml_for_value(subset.value.high, 'high') if subset.value.high -%>
+                </repeatNumber>
               <%- else -%>
                 <%= xml_for_value(subset.value, 'value') %>
               <%- end -%>
