@@ -1,4 +1,5 @@
       <entry typeCode="DRIV">
+        <%= xml_for_local_variable(criteria) %>
         <procedureCriteria moodCode="EVN" classCode="PROC"<%= " actionNegationInd='true'" if criteria.negation %>>
           <%= xml_for_template(criteria, is_source_data_criteria) %>
           <id root="2.16.840.1.113883.3.100.1" extension="<%= criteria.id %>"/>

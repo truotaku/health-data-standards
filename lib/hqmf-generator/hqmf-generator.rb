@@ -23,8 +23,11 @@ module HQMF2
     # by the erb templates that are used to generate the HQMF document.
     class ErbContext < OpenStruct
       
+
       def initialize(vars)
         super(vars)
+        @local_var_names = {}
+        @local_var_counter = {}
       end
       
       # Get a binding that contains all the instance variables
@@ -33,6 +36,19 @@ module HQMF2
         binding
       end
       
+      def xml_for_local_variable(criteria)
+        name = @local_var_names[criteria.id]
+        unless name
+          if criteria.specific_occurrence
+            name = "Occurrence#{criteria.specific_occurrence}#{criteria.id}"
+          else
+            name = criteria.id
+          end
+          @local_var_names[criteria.id] = name
+        end
+        HQMF2::Generator.render_template('local_variable', {'name' => name})
+      end
+
       def xml_for_reference_id(id)
         reference = HQMF::Reference.new(id)
         xml_for_reference(reference)
@@ -305,6 +321,8 @@ module HQMF2
           'denominatorException'
         when HQMF::PopulationCriteria::DENEX
           'denominatorExclusion'
+        when HQMF::PopulationCriteria::MSRPOPL
+          'measurePopulation'  
         else
           raise "Unknown population criteria type #{population_criteria_code}"
         end
