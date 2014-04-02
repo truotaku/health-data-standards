@@ -160,7 +160,7 @@ module HQMF2
       def xml_for_population_criteria(population, criteria_id)
         xml = ''
         population_criteria = doc.population_criteria(population[criteria_id])
-        if population_criteria
+        if population_criteria && population_criteria != "measureObservation"
           xml = HQMF2::Generator.render_template('population_criteria', {'doc' => doc, 'population' => population, 'criteria_id' => criteria_id, 'population_criteria' => population_criteria})
         end
         xml
@@ -174,6 +174,16 @@ module HQMF2
           end
         end
         refs.join
+      end
+
+      def xml_for_measure_observation_definition(doc)
+        observation = doc.find_population_by_type(HQMF::PopulationCriteria::OBSERV)
+        msrpopl = doc.find_population_by_type( HQMF::PopulationCriteria::MSRPOPL)
+        HQMF2::Generator.render_template('measure_observation_definition', {'doc' => doc, 'observation' => observation, "msrpopl" => msrpopl})
+      end
+
+      def expression_for_observation(doc,observation)
+        "NOT IMPLEMENTED"
       end
 
       def data_criteria_should_be_grouper?(criteria)
@@ -323,7 +333,9 @@ module HQMF2
           'denominatorExclusion'
         when HQMF::PopulationCriteria::MSRPOPL
           'measurePopulation'  
-        else
+        when HQMF::PopulationCriteria::OBSERV
+           'measureObservation'  
+        else  
           raise "Unknown population criteria type #{population_criteria_code}"
         end
       end

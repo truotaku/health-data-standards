@@ -9,7 +9,7 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
   Dir.mkdir RESULTS_DIR
 
   # Automatically generate one test method per measure file
-  measure_files = File.join('test', 'fixtures', '1.0', 'measures', 'e{p,h}_0022.xml')
+  measure_files = File.join('test', 'fixtures', '1.0', 'measures', '*.xml')
   Dir.glob(measure_files).each do | measure_filename |
     measure_name = /.*[\/\\]((ep|eh)_.*)\.xml/.match(measure_filename)[1]
     define_method("test_#{measure_name}") do
@@ -22,30 +22,37 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
     # open the v1 file and generate a v2.1 xml string
     v1_model = HQMF::Parser.parse(File.open(measure_filename).read, '1.0')
 
-    skip('Continuous Variable measures currently not supported') if v1_model.population_criteria('MSRPOPL')
+    #skip('Continuous Variable measures currently not supported') if v1_model.population_criteria('MSRPOPL')
 
     hqmf_xml = HQMF2::Generator::ModelProcessor.to_hqmf(v1_model)
-    v2_model = HQMF::Parser.parse(hqmf_xml, '2.0')
+    
+    begin
+      v2_model = HQMF::Parser.parse(hqmf_xml, '2.0')
 
-    v1_json = JSON.parse(v1_model.to_json.to_json)
-    v2_json = JSON.parse(v2_model.to_json.to_json)
+      v1_json = JSON.parse(v1_model.to_json.to_json)
+      v2_json = JSON.parse(v2_model.to_json.to_json)
 
-    update_v1_json(v1_json)
+      update_v1_json(v1_json)
 
-    diff = v1_json.diff_hash(v2_json, true, true)
+      diff = v1_json.diff_hash(v2_json, true, true)
 
-    unless diff.empty?
-      outfile = File.join("#{RESULTS_DIR}","#{measure_name}_diff.json")
-      File.open(outfile, 'w') {|f| f.write(JSON.pretty_generate(JSON.parse(diff.to_json))) }
-      outfile = File.join("#{RESULTS_DIR}","#{measure_name}_r1.json")
-      File.open(outfile, 'w') {|f| f.write(JSON.pretty_generate(v1_json)) }
-      outfile = File.join("#{RESULTS_DIR}","#{measure_name}_r2.json")
-      File.open(outfile, 'w') {|f| f.write(JSON.pretty_generate(v2_json)) }
+      unless diff.empty?
+        outfile = File.join("#{RESULTS_DIR}","#{measure_name}_diff.json")
+        File.open(outfile, 'w') {|f| f.write(JSON.pretty_generate(JSON.parse(diff.to_json))) }
+        outfile = File.join("#{RESULTS_DIR}","#{measure_name}_r1.json")
+        File.open(outfile, 'w') {|f| f.write(JSON.pretty_generate(v1_json)) }
+        outfile = File.join("#{RESULTS_DIR}","#{measure_name}_r2.json")
+        File.open(outfile, 'w') {|f| f.write(JSON.pretty_generate(v2_json)) }
+        outfile = File.join("#{RESULTS_DIR}","#{measure_name}_r2.xml")
+        File.open(outfile, 'w') {|f| f.write(hqmf_xml) }
+      end
+
+      assert diff.empty?, 'Differences in model after roundtrip to HQMF V2'
+    rescue
       outfile = File.join("#{RESULTS_DIR}","#{measure_name}_r2.xml")
       File.open(outfile, 'w') {|f| f.write(hqmf_xml) }
+      raise $!
     end
-
-    assert diff.empty?, 'Differences in model after roundtrip to HQMF V2'
   end
 
   def update_v1_json(v1_json)

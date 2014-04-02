@@ -66,5 +66,22 @@
       <%- end -%>
     </populationCriteriaSection>
   </component>
+ <%- if doc.is_cv? -%>
+
+   <component>
+    <measurObservationSection>
+      <templateId>
+        <item root="2.16.840.1.113883.10.20.28.2.4" />
+      </templateId>
+      <code code="57027-5" codeSystem="2.16.840.1.113883.6.1">
+        <displayName value="Measure Observation" />
+      </code>
+      <title value="Measure Observation Section" />
+      <text></text>
+      <%= xml_for_measure_observation_definition(doc) %>
+    </measurObservationSection>
+  </component>
+
+  <%- end -%>
   <%- end -%>
 </QualityMeasureDocument>

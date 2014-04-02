@@ -122,6 +122,14 @@ module HQMF
     def population_criteria(id)
       find(@population_criteria, :id, id)
     end
+
+    def is_cv?
+      find(@population_criteria, :type, HQMF::PopulationCriteria::MSRPOPL)
+    end
+
+    def find_population_by_type(type)
+      find(@population_criteria, :type, type)
+    end
     
     # Get all the data criteria defined by the measure
     # @return [Array] an array of HQMF::DataCriteria describing the data elements used by the measure
