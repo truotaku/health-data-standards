@@ -170,6 +170,7 @@ module HQMF2
     end
     
     def to_model
+
       mv = value ? value.to_model : nil
       met = effective_time ? effective_time.to_model : nil
       mtr = temporal_references.collect {|ref| ref.to_model}
@@ -251,7 +252,7 @@ module HQMF2
         code = HQMF2::Utilities.attr_val(field, './*/cda:code/@code')
         code_id = HQMF::DataCriteria::VALUE_FIELDS[code]
         value = DataCriteria.parse_value(field, './*/cda:value')
-        fields[code_id] = value
+        fields[code_id] = value if value && code_id
       end
       # special case for facility location which uses a very different structure
       @entry.xpath('./*/cda:outboundRelationship[*/cda:participation]', HQMF2::Document::NAMESPACES).each do |field|
