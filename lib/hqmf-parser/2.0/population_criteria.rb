@@ -5,8 +5,9 @@ module HQMF2
   
     include HQMF2::Utilities
     
-    attr_reader :preconditions, :id, :hqmf_id, :title, :type
-    
+    attr_reader :preconditions, :id, :hqmf_id, :title
+    #need to do this to allow for setting the type to OBSERV for 
+    attr_accessor :type
     # Create a new population criteria from the supplied HQMF entry
     # @param [Nokogiri::XML::Element] the HQMF entry
     def initialize(entry, doc)
@@ -37,7 +38,7 @@ module HQMF2
     # @return [String] conjunction code
     def conjunction_code
       case @type
-      when HQMF::PopulationCriteria::IPP, HQMF::PopulationCriteria::DENOM, HQMF::PopulationCriteria::NUMER
+      when HQMF::PopulationCriteria::IPP, HQMF::PopulationCriteria::DENOM, HQMF::PopulationCriteria::NUMER,HQMF::PopulationCriteria::MRSPOPL
         HQMF::Precondition::ALL_TRUE
       when HQMF::PopulationCriteria::DENEXCEP, HQMF::PopulationCriteria::DENEX
         HQMF::Precondition::AT_LEAST_ONE_TRUE
