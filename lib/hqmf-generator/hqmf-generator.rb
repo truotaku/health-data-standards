@@ -160,7 +160,7 @@ module HQMF2
       def xml_for_population_criteria(population, criteria_id)
         xml = ''
         population_criteria = doc.population_criteria(population[criteria_id])
-        if population_criteria && population_criteria != "measureObservation"
+        if population_criteria && population_element_prefix(criteria_id) != "measureObservation"
           xml = HQMF2::Generator.render_template('population_criteria', {'doc' => doc, 'population' => population, 'criteria_id' => criteria_id, 'population_criteria' => population_criteria})
         end
         xml

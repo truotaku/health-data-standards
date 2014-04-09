@@ -106,7 +106,8 @@ module HQMF2
           HQMF::PopulationCriteria::DENOM => 'denominatorCriteria',
           HQMF::PopulationCriteria::NUMER => 'numeratorCriteria',
           HQMF::PopulationCriteria::DENEXCEP => 'denominatorExceptionCriteria',
-          HQMF::PopulationCriteria::DENEX => 'denominatorExclusionCriteria'
+          HQMF::PopulationCriteria::DENEX => 'denominatorExclusionCriteria',
+          HQMF::PopulationCriteria::MSRPOPL => 'measurePopulationCriteria'
         }.each_pair do |criteria_id, criteria_element_name|
           criteria_def = population_def.at_xpath("cda:component[cda:#{criteria_element_name}]", NAMESPACES)
           
@@ -143,12 +144,46 @@ module HQMF2
             end
           end
         end
+
+
         id_def = population_def.at_xpath('cda:id/@extension', NAMESPACES)
         population['id'] = id_def ? id_def.value : "Population#{population_index}"
         title_def = population_def.at_xpath('cda:title/@value', NAMESPACES)
         population['title'] = title_def ? title_def.value : "Population #{population_index}"
         @populations << population
       end
+
+
+      #look for observation data in separate section but create a population for it if it exists
+      observation_section = @doc.xpath('cda:QualityMeasureDocument/cda:component/cda:measureObservationSection', NAMESPACES)
+      if !observation_section.empty?
+        observation_section.xpath("cda:definition",NAMESPACES).each do |criteria_def|
+          criteria_id = "OBSERV"
+          population = {}
+          criteria = PopulationCriteria.new(criteria_def, self)
+          criteria.type="OBSERV"
+          # this section constructs a human readable id.  The first IPP will be IPP, the second will be IPP_1, etc.  This allows the populations to be
+          # more readable.  The alternative would be to have the hqmf ids in the populations, which would work, but is difficult to read the populations.
+          if ids_by_hqmf_id["#{criteria.hqmf_id}"]
+             criteria.create_human_readable_id(ids_by_hqmf_id[criteria.hqmf_id])
+          else
+            if population_counters[criteria_id]
+              population_counters[criteria_id] += 1
+              criteria.create_human_readable_id("#{criteria_id}_#{population_counters[criteria_id]}")
+            else
+              population_counters[criteria_id] = 0
+              criteria.create_human_readable_id(criteria_id)
+            end
+            ids_by_hqmf_id["#{criteria.hqmf_id}"] = criteria.id
+          end
+          
+          @population_criteria << criteria
+
+          population[criteria_id] = criteria.id
+          @populations << population
+          end 
+      end
+
     end
     
     # Get the title of the measure
