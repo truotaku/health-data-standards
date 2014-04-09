@@ -147,7 +147,7 @@ module HQMF2
     end
 
     def title
-      attr_val('./@displayName')
+      attr_val('./*/@value')
     end
 
     def value
