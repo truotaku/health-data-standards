@@ -1,6 +1,6 @@
 <%- if value.class==HQMF::Range -%>
-  <<%= name %> <%= "xsi:type=\"#{value.type}\"" if include_type %>>
-    <%- # WARNING: Hacky Fix That Must Be Looked At Again! -%>
+  <<%= name %> <%= "xsi:type=\"#{value.type}\"" if include_type %> <%= "highClosed=\"true\"" if value.high && value.high.inclusive? && name != 'pauseQuantity' %> <%= "lowClosed=\"true\"" if value.low && value.low.inclusive? && name != 'pauseQuantity' %>>
+    <%- # WARNING: Hacky Fixes Above And Below That Must Be Looked At Again! -%>
     <%- if name == 'pauseQuantity' -%>
       <uncertainRange <%= "lowClosed=\"true\"" if value.low && value.low.inclusive? %> <%= "highClosed=\"true\"" if value.high && value.high.inclusive? %>>
         <%= xml_for_value(value.low, 'low') if value.low -%>
