@@ -9,7 +9,7 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
   Dir.mkdir RESULTS_DIR
 
   # Automatically generate one test method per measure file
-  measure_files = File.join('test', 'fixtures', '1.0', 'measures', '*164*.xml')
+  measure_files = File.join('test', 'fixtures', '1.0', 'measures', '*.xml')
   Dir.glob(measure_files).each do | measure_filename |
     measure_name = /.*[\/\\]((ep|eh)_.*)\.xml/.match(measure_filename)[1]
     define_method("test_#{measure_name}") do
