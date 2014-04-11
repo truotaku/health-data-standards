@@ -9,7 +9,7 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
   Dir.mkdir RESULTS_DIR
 
   # Automatically generate one test method per measure file
-  measure_files = File.join('test', 'fixtures', '1.0', 'measures', '*.xml')
+  measure_files = File.join('test', 'fixtures', '1.0', 'measures', '*164*.xml')
   Dir.glob(measure_files).each do | measure_filename |
     measure_name = /.*[\/\\]((ep|eh)_.*)\.xml/.match(measure_filename)[1]
     define_method("test_#{measure_name}") do
@@ -33,6 +33,7 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
       v2_json = JSON.parse(v2_model.to_json.to_json)
 
       update_v1_json(v1_json)
+      update_v2_json(v2_json)
 
       diff = v1_json.diff_hash(v2_json, true, true)
 
@@ -55,6 +56,11 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
     end
   end
 
+  def regex_clean!(s)
+        s.gsub!(/\n|\t|\r/, ' ')
+        s.gsub!(/ +/, ' ')
+  end
+
   def update_v1_json(v1_json)
     # remove measure period width
     #v1_json['measure_period']['width'] = nil
@@ -62,14 +68,14 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
     
     # remove embedded whitespace formatting in values
     if v1_json['description']
-      v1_json['description'].gsub!(/\n|\t/, ' ')
+      regex_clean!(v1_json['description'])
     end
     v1_json['attributes'].each do |attr|
       if attr['value']
-        attr['value'].gsub!(/\n|\t/, ' ')
+        regex_clean!(attr['value'])
       end
       if attr['value_obj'] && attr['value_obj']['value']
-        attr['value_obj']['value'].gsub!(/\n|\t/, ' ')
+        regex_clean!(attr['value_obj']['value'])
       end
     end
 
@@ -85,6 +91,21 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
     # v2 ranges (in pauseQuantity) cannot be IVL_PQ, so change to PQ
     fix_range_types(v1_json)
   end
+
+  def update_v2_json(v2_json)
+    # remove embedded whitespace formatting in values
+    if v2_json['description']
+      regex_clean!(v2_json['description'])
+    end
+    v2_json['attributes'].each do |attr|
+      if attr['value']
+        regex_clean!(attr['value'])
+      end
+      if attr['value_obj'] && attr['value_obj']['value']
+        regex_clean!(attr['value_obj']['value'])
+      end
+    end
+  end 
 
   def fix_precondition_negations(root)
     if (HQMF::Precondition::NEGATIONS.keys.include?(root['conjunction_code']) && root['negation'])
