@@ -2,7 +2,7 @@ require_relative '../../../test_helper'
 
   class DocumentV2Test < Test::Unit::TestCase
     def setup
-      @hqmf_contents = File.open("test/fixtures/2.0/NQF59New.xml").read
+      @hqmf_contents = File.open("test/fixtures/2.0/earlyRelease/NQF59New.xml").read
       @doc = HQMF2::Document.new(@hqmf_contents)
       @model = @doc.to_model
     end

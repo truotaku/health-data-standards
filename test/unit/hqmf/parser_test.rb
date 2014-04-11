@@ -4,7 +4,7 @@ class ParseTest < Test::Unit::TestCase
   
   def setup
     @hqmf_contents_v1 = File.open("test/fixtures/1.0/NQF_Retooled_Measure_0043.xml").read
-    @hqmf_contents_v2 = File.open("test/fixtures/2.0/NQF59New.xml").read
+    @hqmf_contents_v2 = File.open("test/fixtures/2.0/earlyRelease/NQF59New.xml").read
   end
   
   def test_basic_parse_v1
