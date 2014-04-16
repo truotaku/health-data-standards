@@ -50,6 +50,8 @@ module HQMF2
       # criteria
       # Assumes @definition and @status are already set
       case @definition
+      when 'transfer_to', 'transfer_from'
+        @code_list_xpath = './cda:observationCriteria/cda:value'
       when 'diagnosis', 'diagnosis_family_history'
         @code_list_xpath = './cda:observationCriteria/cda:value'
       when 'risk_category_assessment', 'procedure_result', 'laboratory_test', 'diagnostic_study_result', 'functional_status_result', 'intervention_result'
@@ -145,7 +147,12 @@ module HQMF2
     # Get the title of the criteria, provides a human readable description
     # @return [String] the title of this data criteria
     def title
-      attr_val("#{@code_list_xpath}/cda:displayName/@value") || id
+      dispValue = attr_val("#{@code_list_xpath}/cda:displayName/@value") 
+      desc = nil
+      if @description.include? ":" 
+         desc = @description.match(/.*:\s+(.+)/)[1]
+      end
+      dispValue || desc || id
     end
     
     # Get the code list OID of the criteria, used as an index to the code list database
@@ -180,6 +187,13 @@ module HQMF2
         field_values[id] = val.to_model
       end
       
+      # Model transfers as a field
+      if ['transfer_to', 'transfer_from'].include? @definition 
+        field_values ||= {}
+        field_values[@definition.upcase] = HQMF::Coded.for_code_list(code_list_id, title)
+      end
+
+
       HQMF::DataCriteria.new(id, title, nil, description, code_list_id, children_criteria, 
         derivation_operator, @definition, status, mv, field_values, met, inline_code_list, 
         @negation, @negation_code_list_id, mtr, mso, @specific_occurrence, 
