@@ -20,15 +20,16 @@ module HQMF2
     
     attr_reader :type, :unit, :value
     
-    def initialize(entry, default_type='PQ')
+    def initialize(entry, default_type='PQ', force_inclusive=false)
       @entry = entry
       @type = attr_val('./@xsi:type') || default_type
       @unit = attr_val('./@unit')
       @value = attr_val('./@value')
+      @force_inclusive = force_inclusive
     end
     
     def inclusive?
-      attr_val("../@#{@entry.name}Closed") == 'true'
+      attr_val("../@#{@entry.name}Closed") == 'true' || @force_inclusive
     end
     
     def derived?
