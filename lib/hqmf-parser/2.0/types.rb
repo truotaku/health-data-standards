@@ -177,7 +177,11 @@ module HQMF2
       @entry = entry
       @type = attr_val('./cda:subsetCode/@code')
       value_def = @entry.at_xpath('./*/cda:repeatNumber', HQMF2::Document::NAMESPACES)
-      if value_def
+      if !value_def
+        value_def = @entry.at_xpath('./*/cda:value', HQMF2::Document::NAMESPACES)
+      end
+
+      if value_def 
         @value = HQMF2::Range.new(value_def, 'IVL_PQ')
       end
     end
