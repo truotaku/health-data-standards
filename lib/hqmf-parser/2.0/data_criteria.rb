@@ -54,7 +54,7 @@ module HQMF2
         @code_list_xpath = './cda:observationCriteria/cda:value'
       when 'diagnosis', 'diagnosis_family_history'
         @code_list_xpath = './cda:observationCriteria/cda:value'
-      when 'risk_category_assessment', 'procedure_result', 'laboratory_test', 'diagnostic_study_result', 'functional_status_result', 'intervention_result'
+      when 'physical_exam', 'risk_category_assessment', 'procedure_result', 'laboratory_test', 'diagnostic_study_result', 'functional_status_result', 'intervention_result'
         @value = extract_value
       when 'medication'
         case @status
