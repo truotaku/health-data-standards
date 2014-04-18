@@ -305,7 +305,7 @@ module HQMF2
           case value_type
           when 'TS'
             value = Value.new(value_def)
-          when 'IVL_PQ', 'IVL_INT'
+          when 'IVL_PQ', 'IVL_INT', 'PQ'
             value = Range.new(value_def)
           when 'CD'
             value = Coded.new(value_def)
