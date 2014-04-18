@@ -192,12 +192,11 @@ module HQMF2
       # Model transfers as a field
       if ['transfer_to', 'transfer_from'].include? @definition 
         field_values ||= {}
-        puts "HERE CODE ID -- #{@code_list_id}"
-        test_code_list = @code_list_id
-        if !test_code_list
-          test_code_list = attr_val("./#{CRITERIA_GLOB}/cda:outboundRelationship/#{CRITERIA_GLOB}/cda:value/@valueSet")
+        field_code_list_id = @code_list_id
+        if !field_code_list_id
+          field_code_list_id = attr_val("./#{CRITERIA_GLOB}/cda:outboundRelationship/#{CRITERIA_GLOB}/cda:value/@valueSet")
         end
-        field_values[@definition.upcase] = HQMF::Coded.for_code_list(test_code_list, title)
+        field_values[@definition.upcase] = HQMF::Coded.for_code_list(field_code_list_id, title)
       end
 
 
