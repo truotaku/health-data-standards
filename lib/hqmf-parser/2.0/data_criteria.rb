@@ -302,6 +302,8 @@ module HQMF2
         if value_type_def
           value_type = value_type_def.value
           case value_type
+          when 'PQ'
+            value = Value.new(value_def, 'PQ', true)
           when 'TS'
             value = Value.new(value_def)
           when 'IVL_PQ', 'IVL_INT', 'PQ'
