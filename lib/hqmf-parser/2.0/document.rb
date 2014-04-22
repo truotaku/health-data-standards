@@ -150,6 +150,10 @@ module HQMF2
         population['id'] = id_def ? id_def.value : "Population#{population_index}"
         title_def = population_def.at_xpath('cda:title/@value', NAMESPACES)
         population['title'] = title_def ? title_def.value : "Population #{population_index}"
+        observation_section = @doc.xpath('cda:QualityMeasureDocument/cda:component/cda:measureObservationSection', NAMESPACES)
+        if !observation_section.empty?
+           population['OBSERV'] = 'OBSERV'
+        end
         @populations << population
       end
 
