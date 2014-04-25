@@ -5,7 +5,7 @@ module HQMF2
   
     include HQMF2::Utilities
     
-    attr_reader :preconditions, :id, :hqmf_id, :title
+    attr_reader :preconditions, :id, :hqmf_id, :title, :aggregator
     #need to do this to allow for setting the type to OBSERV for 
     attr_accessor :type
     # Create a new population criteria from the supplied HQMF entry
@@ -16,6 +16,12 @@ module HQMF2
       @hqmf_id = attr_val('./*/cda:id/@extension')
       @title = attr_val('./*/cda:code/cda:displayName/@value') 
       @type = attr_val('./*/cda:code/@code')
+      @aggregator = nil
+      obs_test = attr_val('./cda:measureObservationDefinition/@classCode')
+      if !@title && obs_test.to_s == "OBS"
+          @title = attr_val('../cda:code/cda:displayName/@value')
+          @aggregator = attr_val('./cda:measureObservationDefinition/cda:methodCode/cda:item/@code')
+      end
       if(!@hqmf_id) # The id extension is not required, if it's not provided use the code
         @hqmf_id = @type
       end
@@ -49,7 +55,7 @@ module HQMF2
     
     def to_model
       mps = preconditions.collect {|p| p.to_model}
-      HQMF::PopulationCriteria.new(id, hqmf_id, type, mps, title)
+      HQMF::PopulationCriteria.new(id, hqmf_id, type, mps, title, aggregator)
     end
 
   end
