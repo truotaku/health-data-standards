@@ -181,11 +181,14 @@ module HQMF2
       if !value_def
         value_def = @entry.at_xpath('./*/cda:value', HQMF2::Document::NAMESPACES)
       end
-      value_type = value_def.at_xpath('./@xsi:type', HQMF2::Document::NAMESPACES)
+      if value_def
+        value_type = value_def.at_xpath('./@xsi:type', HQMF2::Document::NAMESPACES)
+        if String.try_convert(value_type) ==  "ANY"
+          @value = HQMF2::AnyValue.new()
+        end
+      end
 
-      if String.try_convert(value_type) ==  "ANY"
-        @value = HQMF2::AnyValue.new()
-      elsif value_def
+      if value_def && !@value
         @value = HQMF2::Range.new(value_def, 'IVL_PQ')
       end
     end
