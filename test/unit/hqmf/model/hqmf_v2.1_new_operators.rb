@@ -39,7 +39,7 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
         File.open(outfile, 'w') {|f| f.write(JSON.pretty_generate(v2_updated_json)) }
       end
 
-      assert diff.empty?, 'Differences in model after roundtrip to HQMF V2'
+      assert diff.empty?, 'Differences in model when using new HQMF V2 operators'
     rescue
       raise $!
     end
