@@ -28,13 +28,13 @@ concept can be modeled in QDM and HQMF R2.1.
 
 ### Human Readable
 
-    $TargetMedications =
-        OR: "Medication, Order: BH Antidepressant medication"
-        OR: "Medication, Order: BH Mood stabilizer medication"
+    $TargetMedications = Union of:
+        "Medication, Order: BH Antidepressant medication"
+        "Medication, Order: BH Mood stabilizer medication"
     
-    $TargetEncounters =
-        OR: "Encounter, Performed: BH Outpatient encounter"
-        OR: "Encounter, Performed: BH Outpatient psychotherapy"
+    $TargetEncounters = Union of:
+        "Encounter, Performed: BH Outpatient encounter"
+        "Encounter, Performed: BH Outpatient psychotherapy"
     
     AND: $TargetMedications during $TargetEncounters
 
