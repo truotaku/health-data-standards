@@ -259,9 +259,15 @@ module HQMF
       
     end
 
+    def self.get_settings_map
+      return @settings_map if @settings_map
+      settings_file = File.expand_path('../data_criteria.json', __FILE__)
+      @settings_map = JSON.parse(File.read(settings_file))
+    end
+
     def self.get_settings_for_definition(definition, status)
       settings_file = File.expand_path('../data_criteria.json', __FILE__)
-      settings_map = JSON.parse(File.read(settings_file))
+      settings_map = get_settings_map
       key = definition + ((status.nil? || status.empty?) ? '' : "_#{status}")
       settings = settings_map[key]
       
