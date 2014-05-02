@@ -32,10 +32,13 @@ examples directly from the QDM-based HQMF Implementation Guide.
             <code code="MSRTP" codeSystem="2.16.840.1.113883.5.4">
                 <displayName value="Measurement period"/>
             </code>
+            <!-- measure period defined as: Starting at Jan 1, 2012, for a period of 1 year, repeated every year" -->
             <value xsi:type="PIVL_TS">
-                <phase>
+                <phase lowClosed="true" highClosed="true">
+                    <low value="201201010000"/>
                     <width xsi:type="PQ" value="1" unit="a"/>
                 </phase>
+                <period value="1" unit="a" />
             </value>
         </measurePeriod>
     </controlVariable>
@@ -93,15 +96,18 @@ examples directly from the QDM-based HQMF Implementation Guide.
             <code code="MSRTP" codeSystem="2.16.840.1.113883.5.4">
                 <displayName value="Measurement period"/>
             </code>
+            <!-- measure period defined as: Starting at Jan 1, 2012, for a period of 1 year, repeated every year" -->
             <value xsi:type="PIVL_TS">
-                <phase>
+                <phase lowClosed="true" highClosed="true">
+                    <low value="201201010000"/>
                     <width xsi:type="PQ" value="1" unit="a"/>
                 </phase>
+                <period value="1" unit="a" />
             </value>
         </measurePeriod>
     </controlVariable>
     
-    <-- Precondition defined in Initial Patient Population -->
+    <!-- Precondition defined in Initial Patient Population -->
     <precondition>
         <allTrue>
             <precondition typeCode="PRCN">
