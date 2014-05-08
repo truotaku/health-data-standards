@@ -8,7 +8,7 @@ module HQMF2
     attr_reader :temporal_references, :subset_operators, :children_criteria 
     attr_reader :derivation_operator, :negation, :negation_code_list_id, :description
     attr_reader :field_values, :source_data_criteria, :specific_occurrence_const
-    attr_reader :specific_occurrence, :is_source_data_criteria
+    attr_reader :specific_occurrence, :is_source_data_criteria, :comments
   
     CONJUNCTION_CODE_TO_DERIVATION_OP = {
       'OR' => 'UNION',
@@ -34,6 +34,9 @@ module HQMF2
       @id_xpath = './*/cda:id/@extension'
       @code_list_xpath = './*/cda:code'
       @value_xpath = './*/cda:value'
+      @comments = @entry.xpath("./#{CRITERIA_GLOB}/cda:text/cda:xml/cda:qdmUserComments/cda:item/text()", HQMF2::Document::NAMESPACES)
+                        .map{ |v| v.content }
+
       # Try to determine what kind of data criteria we are dealing with
       # First we look for a template id and if we find one just use the definition
       # status and negation associated with that
@@ -203,7 +206,7 @@ module HQMF2
       HQMF::DataCriteria.new(id, title, nil, description, code_list_id, children_criteria, 
         derivation_operator, @definition, status, mv, field_values, met, inline_code_list, 
         @negation, @negation_code_list_id, mtr, mso, @specific_occurrence, 
-        @specific_occurrence_const, @source_data_criteria)
+        @specific_occurrence_const, @source_data_criteria, @comments)
     end
     
     private
