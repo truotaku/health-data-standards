@@ -249,8 +249,9 @@
           </code>
           <text value="Encounter, Performed: Emergency Department Visit">
             <xml>
-                <qdmUserComments xsi:type="StrucDoc.List" listType="ordered" value="comment test">
-                    <item>Emergency department visit</item>
+                <qdmUserComments xsi:type="StrucDoc.List" listType="ordered">
+                    <item>Encounter, Performed</item>
+                    <item>Emergency Department Visit</item>
                 </qdmUserComments>
             </xml>
           </text>
