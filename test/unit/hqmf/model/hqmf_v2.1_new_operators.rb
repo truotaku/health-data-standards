@@ -4,7 +4,7 @@ require_relative '../../../test_helper'
 class HQMFV1V2RoundtripTest < Test::Unit::TestCase
   RESULTS_DIR = 'tmp/hqmf_r2.1_new_operators'
 
-  # Create a blank folder for the errors
+  # Create a blank folder for the results
   FileUtils.rm_rf(RESULTS_DIR) if File.directory?(RESULTS_DIR)
   Dir.mkdir RESULTS_DIR
 
@@ -33,13 +33,9 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
       unless diff.empty?
         outfile = File.join("#{RESULTS_DIR}","#{measure_name}_diff.json")
         File.open(outfile, 'w') {|f| f.write(JSON.pretty_generate(JSON.parse(diff.to_json))) }
-        outfile = File.join("#{RESULTS_DIR}","#{measure_name}_r2.json")
-        File.open(outfile, 'w') {|f| f.write(JSON.pretty_generate(v2_json)) }
-        outfile = File.join("#{RESULTS_DIR}","#{measure_name}_r2_updated.json")
+        outfile = File.join("#{RESULTS_DIR}","#{measure_name}.json")
         File.open(outfile, 'w') {|f| f.write(JSON.pretty_generate(v2_updated_json)) }
       end
-
-      assert diff.empty?, 'Differences in model when using new HQMF V2 operators'
     rescue
       raise $!
     end
