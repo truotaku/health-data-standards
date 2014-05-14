@@ -29,12 +29,12 @@ directly from the QDM-based HQMF Implementation Guide.
 Comments should directly precede the criteria they reference in the human-readable.
 
     # We're interested in encounters that occurred:
+    #     - during the measurement period
     #     - after a diagnosis of Venous Thromoembolism
-    #     - do not involve patients who are on Leucovorin
     #     - and are 120 days or less
     AND: "Encounter, Performed: Inpatient Encounter" satisfies all
+        during "Measurement Period"
         starts after start of "Diagnosis, Active: Venous Thromoembolism"
-        NOT: during "Medication, Active: Leucovorin"
         (length of stay <= 120 day(s))
 
 ### HQMF R2.1 Representation
@@ -51,8 +51,8 @@ Note the special `qdmUserComments` element embedded in the `xml` element.  Each 
                 <xml>
                     <qdmUserComments xsi:type="StrucDoc.List" listType="ordered">
                         <item>We're interested in encounters that occurred:</item>
+                        <item>    - during the measurement period</item>
                         <item>    - after a diagnosis of Venous Thromoembolism</item>
-                        <item>    - do not involve patients who are on Leucovorin</item>
                         <item>    - and are 120 days or less</item>
                     </qdmUserComments>
                 </xml>
@@ -60,13 +60,13 @@ Note the special `qdmUserComments` element embedded in the `xml` element.  Each 
             <outboundRelationship typeCode="COMP">
                 <conjunctionCode code="AND"/>
                 <criteriaReference classCode="ENC" moodCode="EVN">
-                    <id root="d7fbe089-ff04-4f58-b604-cb6d5ebce4cc" extension="inpatientEncounterSASVT"/>
+                    <id root="d7fbe089-ff04-4f58-b604-cb6d5ebce4cc" extension="inpatientEncounterDuringMP"/>
                 </criteriaReference>
             </outboundRelationship>
             <outboundRelationship typeCode="COMP">
                 <conjunctionCode code="AND"/>
                 <criteriaReference classCode="ENC" moodCode="EVN">
-                    <id root="d7fbe089-ff04-4f58-b604-cb6d5ebce4cc" extension="inpatientEncounterNotDuringLeucovorin"/>
+                    <id root="d7fbe089-ff04-4f58-b604-cb6d5ebce4cc" extension="inpatientEncounterSASVT"/>
                 </criteriaReference>
             </outboundRelationship>
             <outboundRelationship typeCode="COMP">
