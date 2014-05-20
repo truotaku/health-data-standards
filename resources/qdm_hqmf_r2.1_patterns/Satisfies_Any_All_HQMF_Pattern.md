@@ -15,18 +15,17 @@ must satisfy `all` conditions to be in the result set for  `Satisfies All`.
 * timing relationships (e.g., "starts before start of...")
 * timing relationships w/ operators (e.g., "< 5 day(s) starts before start of…")
 * datatype-specific attribute conditions (e.g., "(length of stay < 90 day(s))")
-* negations of other supported conditions (e.g., "NOT: starts before start of...")
 
+`Satisfies Any` and `Satisfies All` do not support nested `NOT` operators.
 
 ## General Approach
 * Represent each line under `Satisfies Any` / `Satisfies All` with a separate entry in the data criteria.
 * A `GrouperCriteria` represents the full phrase by referencing the data criteria items in `outboundRelationship`s 
 * `Satisfies Any` uses `OR` conjunction codes; `Satisfies All` uses `AND` conjunction codes
-* Negations must be on the data criteria since they are not allowed on `outboundRelationship` (according to HQMF R2 spec)
 
 ## Satisfies All Example
 
-This example shows a satisfies all using a timing relation, a negation, and a comparison on an attribute value.
+This example shows a satisfies all using timing relationships and a comparison on an attribute value.
 
 NOTE: This example is _NOT_ intended to be medically accurate.  It is only intended to show how the _Satisfies All_
 concept can be modeled in QDM and HQMF R2.1.  To ensure accuracy of representation, we've re-used several criteria 
@@ -35,12 +34,53 @@ examples directly from the QDM-based HQMF Implementation Guide.
 ### Human Readable
 
     AND: "Encounter, Performed: Inpatient Encounter" satisfies all
+        during "Measurement Period"
         starts after start of "Diagnosis, Active: Venous Thromoembolism"
-        NOT: during "Medication, Active: Leucovorin"
         (length of stay <= 120 day(s))
 
 ### HQMF R2.1 Representation
    
+    <!-- MeasurePeriod defined in header -->
+    <controlVariable>
+        <measurePeriod>
+            <id root="2.16.840.1.113883.3.100.100.123" extension="MeasurePeriod"/>
+            <code code="MSRTP" codeSystem="2.16.840.1.113883.5.4">
+                <displayName value="Measurement period"/>
+            </code>
+            <!-- measure period defined as: Starting at Jan 1, 2012, for a period of 1 year, repeated every year" -->
+            <value xsi:type="PIVL_TS">
+                <phase lowClosed="true" highClosed="true">
+                    <low value="201201010000"/>
+                    <width xsi:type="PQ" value="1" unit="a"/>
+                </phase>
+                <period value="1" unit="a" />
+            </value>
+        </measurePeriod>
+    </controlVariable>
+    
+    <!-- in dataCriteriaSection -->
+    
+    <!-- Encounter, Performed: Inpatient Encounter DURING "Measurement Period" -->
+    <entry typeCode="DRIV">
+        <localVariableName value="inpatientEncounterDuringMeasurePeriod"/>
+        <encounterCriteria classCode="ENC" moodCode="EVN">
+            <templateId>
+                <item root="2.16.840.1.113883.10.20.28.3.5"/>
+            </templateId>
+            <id root="d7fbe089-ff04-4f58-b604-cb6d5ebce4cc" extension="inpatientEncounterDuringLeucovorin"/>
+            <code valueSet="2.16.840.1.113883.3.117.1.7.1.23">
+                <displayName value="Inpatient Encounter SNOMED-CT Value Set"/>
+            </code>
+            <title value="Encounter, Performed"/>
+            <statusCode code="completed"/>
+            <temporallyRelatedInformation typeCode="DURING">
+                <criteriaReference classCode="OBS" moodCode="EVN">
+                    <id root="2.16.840.1.113883.3.100.100.123" extension="MeasurePeriod"/>
+                </criteriaReference>
+            </temporallyRelatedInformation>
+        </encounterCriteria>
+    </entry>
+    
     <!-- Encounter, Performed: Inpatient Encounter SAS "Diagnosis, Active: Venous Thromoembolism" -->
     <entry typeCode="DRIV">
         <localVariableName value="inpatientEncounterSASVT"/>
@@ -57,27 +97,6 @@ examples directly from the QDM-based HQMF Implementation Guide.
             <temporallyRelatedInformation typeCode="SAS">
                 <criteriaReference classCode="OBS" moodCode="EVN">
                     <id root="9e4e810d-3c3e-461e-86f8-6fe7a0b1ca2b" extension="diagnosisVT"/>
-                </criteriaReference>
-            </temporallyRelatedInformation>
-        </encounterCriteria>
-    </entry>
-    
-    <!-- Encounter, Performed: Inpatient Encounter NOT DURING "Medication, Active: Leucovorin" -->
-    <entry typeCode="DRIV">
-        <localVariableName value="inpatientEncounterDuringLeucovorin"/>
-        <encounterCriteria classCode="ENC" moodCode="EVN" actionNegationInd="true">
-            <templateId>
-                <item root="2.16.840.1.113883.10.20.28.3.5"/>
-            </templateId>
-            <id root="d7fbe089-ff04-4f58-b604-cb6d5ebce4cc" extension="inpatientEncounterDuringLeucovorin"/>
-            <code valueSet="2.16.840.1.113883.3.117.1.7.1.23">
-                <displayName value="Inpatient Encounter SNOMED-CT Value Set"/>
-            </code>
-            <title value="Encounter, Performed"/>
-            <statusCode code="completed"/>
-            <temporallyRelatedInformation typeCode="DURING">
-                <criteriaReference classCode="SBADM" moodCode="EVN">
-                    <id root="6c21f22e-3ae3-435d-a240-7718cc418b7d" extension="medicationLeucovorin" />
                 </criteriaReference>
             </temporallyRelatedInformation>
         </encounterCriteria>
@@ -139,28 +158,6 @@ examples directly from the QDM-based HQMF Implementation Guide.
         </observationCriteria>
     </entry>
     
-    <!-- Medication, Active: Leucovorin -->
-    <entry typeCode="DRIV">
-        <localVariableName value="medicationLeucovorin"/>
-        <substanceAdministrationCriteria classCode="SBADM" moodCode="EVN">
-            <templateId>
-                <item root="2.16.840.1.113883.10.20.28.3.44" />
-            </templateId>
-            <id root="6c21f22e-3ae3-435d-a240-7718cc418b7d" extension="medicationLeucovorin" />
-            <title value="Medication, Active" />
-            <statusCode code="active" />
-            <participation typeCode="CSM">
-                <role classCode="MANU">
-                    <playingMaterial classCode="MMAT" determinerCode="KIND">
-                        <code valueSet="2.16.840.1.113883.3.464.1003.196.12.1205">
-                            <displayName value="Leucovorin Grouping Value Set" />
-                        </code>
-                    </playingMaterial>
-                </role>
-            </participation>
-        </substanceAdministrationCriteria>
-    </entry>
-    
     <!-- Grouper to Represent Satisfies All -->
     <entry typeCode="DRIV">
         <localVariableName value="satisfiesAllExample"/>
@@ -169,13 +166,13 @@ examples directly from the QDM-based HQMF Implementation Guide.
             <outboundRelationship typeCode="COMP">
                 <conjunctionCode code="AND"/>
                 <criteriaReference classCode="ENC" moodCode="EVN">
-                    <id root="d7fbe089-ff04-4f58-b604-cb6d5ebce4cc" extension="inpatientEncounterSASVT"/>
+                    <id root="d7fbe089-ff04-4f58-b604-cb6d5ebce4cc" extension="inpatientEncounterDuringMeasurePeriod"/>
                 </criteriaReference>
             </outboundRelationship>
             <outboundRelationship typeCode="COMP">
                 <conjunctionCode code="AND"/>
                 <criteriaReference classCode="ENC" moodCode="EVN">
-                    <id root="d7fbe089-ff04-4f58-b604-cb6d5ebce4cc" extension="inpatientEncounterDuringLeucovorin"/>
+                    <id root="d7fbe089-ff04-4f58-b604-cb6d5ebce4cc" extension="inpatientEncounterSASVT"/>
                 </criteriaReference>
             </outboundRelationship>
             <outboundRelationship typeCode="COMP">
