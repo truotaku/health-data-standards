@@ -282,8 +282,9 @@ module HQMF2
         code = HQMF2::Utilities.attr_val(field, './*/cda:participation/cda:role/@classCode')
         code_id = HQMF::DataCriteria::VALUE_FIELDS[code]
         value = Coded.new(field.at_xpath('./*/cda:participation/cda:role/cda:code', HQMF2::Document::NAMESPACES))
-        fields[code_id] = value
+        fields[code_id] = value if value && code_id
       end
+      
       fields
     end
     

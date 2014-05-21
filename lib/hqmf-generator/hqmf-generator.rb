@@ -251,7 +251,15 @@ module HQMF2
           raise "Unknown demographic code [#{characteristic}]"
         end
       end
-      
+   
+      def is_transfer(code)
+        if code == "TRANSFER_TO" || code == "TRANSFER_FROM"
+          true
+        else
+          false
+        end
+      end
+   
       def oid_for_characteristic(characteristic)
         case characteristic
         when :birthtime
