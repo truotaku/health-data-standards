@@ -30,8 +30,8 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
     begin
       v2_model = HQMF::Parser.parse(hqmf_xml, '2.0')
 
-      v1_json = JSON.parse(v1_model.to_json.to_json)
-      v2_json = JSON.parse(v2_model.to_json.to_json)
+      v1_json = JSON.parse(v1_model.to_json.to_json,max_nesting: 100)
+      v2_json = JSON.parse(v2_model.to_json.to_json,max_nesting: 100)
 
       update_v1_json(v1_json)
       update_v2_json(v2_json)
