@@ -154,7 +154,7 @@ module HQMF2
     def title
       dispValue = attr_val("#{@code_list_xpath}/cda:displayName/@value") 
       desc = nil
-      if @description.include? ":" 
+      if @description && (@description.include? ":")
          desc = @description.match(/.*:\s+(.+)/)[1]
       end
       dispValue || desc || id
