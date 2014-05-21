@@ -46,7 +46,7 @@ module HQMF2
     # @return [String] conjunction code
     def conjunction_code
       case @type
-      when HQMF::PopulationCriteria::IPP, HQMF::PopulationCriteria::DENOM, HQMF::PopulationCriteria::NUMER,HQMF::PopulationCriteria::MRSPOPL
+      when HQMF::PopulationCriteria::IPP, HQMF::PopulationCriteria::DENOM, HQMF::PopulationCriteria::NUMER,HQMF::PopulationCriteria::MSRPOPL
         HQMF::Precondition::ALL_TRUE
       when HQMF::PopulationCriteria::DENEXCEP, HQMF::PopulationCriteria::DENEX
         HQMF::Precondition::AT_LEAST_ONE_TRUE
