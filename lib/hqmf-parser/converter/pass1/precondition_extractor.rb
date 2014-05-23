@@ -47,15 +47,19 @@ module HQMF
       # if we reference the measurement period, then we want to check if the reference is to the start or end of the measurement period
       # if we SBS of the END of the measurement period, we want to convert that to SBE of the measurement period
       if target_id == HQMF::Document::MEASURE_PERIOD_ID
-        references_start = {'SBS'=>'SBE','SAS'=>'SAE','EBS'=>'EBE','EAS'=>'EAE'}
-        references_end = {'EBE'=>'EBS','EAE'=>'EAS','SBE'=>'SBS','SAE'=>'SAS'}
+        references_start = {'SBS'=>'SBE','SAS'=>'SAE','EBS'=>'EBE','EAS'=>'EAE','SCW'=>'SCWE'}
+        references_end = {'EBE'=>'EBS','EAE'=>'EAS','SBE'=>'SBS','SAE'=>'SAS','ECW'=>'ECWS'}
         if data_criteria_converter.measure_period_v1_keys[:measure_start] == restriction[:target_id] and references_end[type]
           # before or after the END of the measurement period START.  Convert to before or after the START of the measurement period.
           # SAE of MPS => SAS of MP
+          # ends concurrent with measurement period START. Convert to concurrent with START of measurement period.
+          # ECW of MPS => ECWS
           type = references_end[type]
         elsif data_criteria_converter.measure_period_v1_keys[:measure_end] == restriction[:target_id] and references_start[type]
           # before or after the START of the measurement period END.  Convert to before or after the END of the measurement period.
           # SBS of MPE => SBE of MP
+          # starts concurrent with measurement period END. Convert to concurrent with END of measurement period.
+          # SCW of MPE => SCWE
           type = references_start[type]
         end
       end
@@ -132,6 +136,15 @@ module HQMF
         container = HQMF::Converter::SimpleRestriction.new(operator, nil, [comparison_precondition])
       else
         container = HQMF::Converter::SimpleRestriction.new(operator, target_id)
+        # handle transitive restrictions... this is where we are adding a field to a target of a timing restriction
+        if (restrictions && !restrictions.empty? && children.nil?)
+          children = []
+          restrictions.each do |child|
+            comparison_precondition = HQMF::Converter::SimplePrecondition.new(nil,[child],HQMF::Reference.new(target_id),nil, false)
+            comparison_precondition.klass = HQMF::Converter::SimplePrecondition::COMPARISON
+            children << comparison_precondition
+          end
+        end
         container.preconditions = children
       end
       

@@ -1,7 +1,7 @@
 require 'fileutils'
 require_relative '../../../test_helper'
 
-class HQMFV1V2RoundtripTest < Test::Unit::TestCase
+class HQMFV2NewOperators < Test::Unit::TestCase
   RESULTS_DIR = 'tmp/hqmf_r2.1_new_operators'
 
   # Create a blank folder for the results

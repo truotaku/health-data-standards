@@ -19,9 +19,20 @@
                 <item root="<%= details[:template_id] %>"/>
               </templateId> 
               <%- end -%>
+              
+              <%- if is_transfer(details[:code]) -%>
+              <title value="<%= details[:code] %>" />
+              <statusCode code="completed" />
+              <participation  typeCode="ORG">
+                <role classCode="LOCE">
+                  <code xsi:type="CD" />
+                </role>
+              </participation>
+              <%- else -%>
               <code code="<%= details[:code] %>" codeSystem="<%= details[:code_system] %>" codeSystemName="<%= details[:code_system_name] %>">
                 <displayName value="<%=ERB::Util::h details[:title] %>"/> 
               </code>
+              <%- end -%>
               <%= xml_for_value(value) %>
             </observationCriteria>
 <%- end -%>
