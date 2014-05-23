@@ -21,6 +21,7 @@ module HQMF2
     # @param [Nokogiri::XML::Element] entry the parsed HQMF entry
     def initialize(entry)
       @entry = entry
+      @local_variable_name = extract_local_variable_name
       @status = attr_val('./*/cda:statusCode/@code')
       @description = attr_val("./#{CRITERIA_GLOB}/cda:text/@value")
       extract_negation()
@@ -75,7 +76,20 @@ module HQMF2
       end
     end
 
+    def extract_local_variable_name
+      lvn = @entry.at_xpath("./cda:localVariableName")
+      lvn["value"] if lvn
+    end
+
     def extract_type_from_definition
+      if @entry.at_xpath("./cda:grouperCriteria") 
+        if @local_variable_name && @local_variable_name.match(/qdm_/)
+          @definition = "variable"
+        else
+          @definition = 'derived'
+        end
+        return 
+      end
       # See if we can find a match for the entry definition value and status.
       entry_type = attr_val('./*/cda:definition/*/cda:id/@extension')
       begin
