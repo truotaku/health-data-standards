@@ -4,13 +4,21 @@
             <id root="2.16.840.1.113883.3.100.1" extension="<%= criteria.id %>"/>
             <%- if subset.value -%>
               <%- if subset.type == 'COUNT' -%>
-                <value xsi:type="PQ">
-                  <uncertainRange <%= "lowClosed=\"true\"" if subset.value.low && subset.value.low.inclusive? %> 
-                              <%= "highClosed=\"true\"" if subset.value.high && subset.value.high.inclusive? %>>
-                   <%= xml_for_value(subset.value.low, 'low') if subset.value.low -%>
-                   <%= xml_for_value(subset.value.high, 'high') if subset.value.high -%>
-                  </uncertainRange>
-                </value>
+                <%- if reference_type_name(criteria.id) != "PROC" -%>
+                  <value xsi:type="PQ">
+                    <uncertainRange <%= "lowClosed=\"true\"" if subset.value.low && subset.value.low.inclusive? %> 
+                                <%= "highClosed=\"true\"" if subset.value.high && subset.value.high.inclusive? %>>
+                     <%= xml_for_value(subset.value.low, 'low') if subset.value.low -%>
+                     <%= xml_for_value(subset.value.high, 'high') if subset.value.high -%>
+                    </uncertainRange>
+                  </value>
+                <%- else -%>
+                    <repeatNumber <%= "lowClosed=\"true\"" if subset.value.low && subset.value.low.inclusive? %> 
+                                <%= "highClosed=\"true\"" if subset.value.high && subset.value.high.inclusive? %>>
+                         <low value="<%= subset.value.low.value %>"/>
+                         <high value="<%= subset.value.high.value %>"/>
+                    </repeatNumber>
+                <%- end -%>
               <%- else -%>
                 <%= xml_for_value(subset.value, 'value') %>
               <%- end -%>
