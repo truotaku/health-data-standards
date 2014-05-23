@@ -177,7 +177,7 @@ module HQMF2
     def initialize(entry)
       @entry = entry
       @type = attr_val('./cda:subsetCode/@code')
-      value_def = @entry.at_xpath('./*/cda:repeatNumber', HQMF2::Document::NAMESPACES)
+      value_def = @entry.at_xpath('./*/cda:value/cda:uncertainRange', HQMF2::Document::NAMESPACES)
       if !value_def
         value_def = @entry.at_xpath('./*/cda:value', HQMF2::Document::NAMESPACES)
       end
