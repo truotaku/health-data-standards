@@ -74,6 +74,7 @@ examples directly from the QDM-based HQMF Implementation Guide.
             <title value="Encounter, Performed"/>
             <statusCode code="completed"/>
             <temporallyRelatedInformation typeCode="DURING">
+                <qdm:temporalInformation precisionUnit="min"/>
                 <criteriaReference classCode="OBS" moodCode="EVN">
                     <id root="2.16.840.1.113883.3.100.100.123" extension="MeasurePeriod"/>
                 </criteriaReference>
@@ -216,13 +217,12 @@ HQMF R2.1 representation is exactly the same as `Satisfies All`, except it uses 
             </code>
             <title value="Encounter, Performed"/>
             <statusCode code="completed"/>
-            <temporallyRelatedInformation typeCode="SCW">
-                <pauseQuantity>
-                    <uncertainRange>
-                        <low xsi:type="PQ" nullFlavor="NINF"/>
-                        <high xsi:type="PQ" value="-30" unit="d"/>
-                    </uncertainRange>
-                </pauseQuantity>
+            <temporallyRelatedInformation typeCode="SAS">
+                <qdm:temporalInformation precisionUnit="d">
+                    <qdm:delta>
+                        <low xsi:type="PQ" value="30" unit="d"/>
+                    </qdm:delta>
+                </qdm:temporalInformation>
                 <criteriaReference classCode="OBS" moodCode="EVN">
                     <id root="9e4e810d-3c3e-461e-86f8-6fe7a0b1ca2b" extension="diagnosisVT"/>
                 </criteriaReference>

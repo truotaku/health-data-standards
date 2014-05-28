@@ -168,6 +168,7 @@ concept can be modeled in QDM and HQMF R2.1.
                 </criteriaReference>
             </outboundRelationship>
             <temporallyRelatedInformation typeCode="DURING">
+                <qdm:temporalInformation precisionUnit="min"/>
                 <criteriaReference classCode="GROUPER" moodCode="EVN">
                     <id root="0" extension="qdm_var_TargetEncounters"/>
                 </criteriaReference>
