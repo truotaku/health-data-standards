@@ -58,13 +58,12 @@ examples directly from the QDM-based HQMF Implementation Guide.
             </code>
             <title value="Patient Characteristic Birth Date"/>
             <statusCode code="completed"/>
-            <temporallyRelatedInformation typeCode="SCW">
-                <pauseQuantity>
-                    <uncertainRange lowClosed="true">
+            <temporallyRelatedInformation typeCode="SBS">
+                <qdm:temporalInformation precisionUnit="d">
+                    <qdm:delta lowClosed="true">
                         <low xsi:type="PQ" value="18" unit="a"/>
-                        <high xsi:type="PQ" nullFlavor="PINF"/>
-                    </uncertainRange>
-                </pauseQuantity>
+                    </qdm:delta>
+                </qdm:temporalInformation>
                 <criteriaReference classCode="OBS" moodCode="EVN">
                     <id root="2.16.840.1.113883.3.100.100.123" extension="MeasurePeriod"/>
                 </criteriaReference>  
@@ -139,13 +138,12 @@ examples directly from the QDM-based HQMF Implementation Guide.
             </code>
             <title value="Patient Characteristic Birth Date"/>
             <statusCode code="completed"/>
-            <temporallyRelatedInformation typeCode="SCW">
-                <pauseQuantity>
-                    <uncertainRange lowClosed="true">
+            <temporallyRelatedInformation typeCode="SBS">
+                <qdm:temporalInformation precisionUnit="d">
+                    <qdm:delta lowClosed="true">
                         <low xsi:type="PQ" value="2" unit="a"/>
-                        <high xsi:type="PQ" nullFlavor="PINF"/>
-                    </uncertainRange>
-                </pauseQuantity>
+                    </qdm:delta>
+                </qdm:temporalInformation>
                 <criteriaReference classCode="OBS" moodCode="EVN">
                     <id root="2.16.840.1.113883.3.100.100.123" extension="MeasurePeriod"/>
                 </criteriaReference>  
@@ -166,13 +164,12 @@ examples directly from the QDM-based HQMF Implementation Guide.
             </code>
             <title value="Patient Characteristic Birth Date"/>
             <statusCode code="completed"/>
-            <temporallyRelatedInformation typeCode="SCW">
-                <pauseQuantity>
-                    <uncertainRange>
-                        <low xsi:type="PQ" nullFlavor="NINF"/>
+            <temporallyRelatedInformation typeCode="SBS">
+                <qdm:temporalInformation precisionUnit="d">
+                    <qdm:delta>
                         <high xsi:type="PQ" value="18" unit="a"/>
-                    </uncertainRange>
-                </pauseQuantity>
+                    </qdm:delta>
+                </qdm:temporalInformation>
                 <criteriaReference classCode="OBS" moodCode="EVN">
                     <id root="2.16.840.1.113883.3.100.100.123" extension="MeasurePeriod"/>
                 </criteriaReference>  

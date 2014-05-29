@@ -79,6 +79,7 @@ concept can be modeled in QDM and HQMF R2.1.
             <title value="Encounter, Performed"/>
             <statusCode code="completed"/>
             <temporallyRelatedInformation typeCode="DURING">
+                <qdm:temporalInformation precisionUnit="min"/>
                 <criteriaReference classCode="OBS" moodCode="EVN">
                     <id root="2.16.840.1.113883.3.100.100.123" extension="MeasurePeriod"/>
                 </criteriaReference>  
@@ -99,13 +100,8 @@ concept can be modeled in QDM and HQMF R2.1.
             </code>
             <title value="Encounter, Performed"/>
             <statusCode code="completed"/>
-            <temporallyRelatedInformation typeCode="ECWS">
-                <pauseQuantity>
-                    <uncertainRange>
-                        <low xsi:type="PQ" value="0" unit="min" />
-                        <high xsi:type="PQ" nullFlavor="PINF"/>
-                    </uncertainRange>
-                </pauseQuantity>
+            <temporallyRelatedInformation typeCode="EBS">
+                <qdm:temporalInformation precisionUnit="min"/>
                 <criteriaReference classCode="OBS" moodCode="EVN">
                     <id root="9e4e810d-3c3e-461e-86f8-6fe7a0b1ca2b" extension="diagnosisDiabetes"/>
                 </criteriaReference>

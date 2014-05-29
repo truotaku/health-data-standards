@@ -122,7 +122,7 @@ module HQMF1
     # Parse an XML document from the supplied contents
     # @return [Nokogiri::XML::Document]
     def self.parse(hqmf_contents)
-      doc = Nokogiri::XML(hqmf_contents)
+      doc = hqmf_contents.kind_of?(Nokogiri::XML::Document) ? hqmf_contents : Nokogiri::XML(hqmf_contents)
       doc.root.add_namespace_definition('cda', 'urn:hl7-org:v3')
       doc
     end
