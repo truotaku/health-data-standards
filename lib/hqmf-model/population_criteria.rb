@@ -18,7 +18,7 @@ module HQMF
 
     STRAT = 'STRAT'
     
-    ALL_POPULATION_CODES = [IPP, STRAT, DENOM, DENEX, NUMER, DENEXCEP, MSRPOPL, OBSERV]
+    ALL_POPULATION_CODES = [STRAT, IPP, DENOM, DENEX, NUMER, DENEXCEP, MSRPOPL, OBSERV]
     
     # Create a new population criteria
     # @param [String] id
@@ -72,7 +72,7 @@ module HQMF
     def conjunction_code
       
       case @type
-      when IPP, DENOM, NUMER, MSRPOPL
+      when IPP, STRAT, DENOM, NUMER, MSRPOPL
         HQMF::Precondition::ALL_TRUE
       when DENEXCEP, DENEX
         HQMF::Precondition::AT_LEAST_ONE_TRUE
