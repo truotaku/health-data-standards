@@ -1645,6 +1645,9 @@
       <entry typeCode="DRIV">
         <localVariableName value="qdm_var_example"/>
         <grouperCriteria classCode="GROUPER" moodCode="EVN">
+          <templateId>
+            <item root="0.1.2.3.4.5.6.7.8.9" identifierName="variable"/>
+          </templateId>
           <id root="0" extension="qdm_var_example"/>
           <text value="Variable Test"/>
           <outboundRelationship typeCode="COMP">
