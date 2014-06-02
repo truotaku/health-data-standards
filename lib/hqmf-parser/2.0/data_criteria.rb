@@ -137,10 +137,16 @@ module HQMF2
       end
       template_ids.each do |template_id|
         defs = HQMF::DataCriteria.definition_for_template_id(template_id)
+        
         if defs
           @definition = defs['definition']
           @status = defs['status'].length > 0 ? defs['status'] : nil
           @negation = defs['negation']
+          return true
+        elsif template_id == "0.1.2.3.4.5.6.7.8.9"
+          @definition = "DUMMY"
+          @status = "DUMMY"
+          @negation = false
           return true
         end
       end
@@ -216,8 +222,11 @@ module HQMF2
         field_values[@definition.upcase] = HQMF::Coded.for_code_list(field_code_list_id, title)
       end
 
-
-      HQMF::DataCriteria.new(id, title, nil, description, code_list_id, children_criteria, 
+      tmp_code_list_id = code_list_id
+      if @definition == "DUMMY"
+        tmp_code_list_id = "0.1.2.3.4.5.6.7.8.9"
+      end
+      HQMF::DataCriteria.new(id, title, nil, description, tmp_code_list_id, children_criteria, 
         derivation_operator, @definition, status, mv, field_values, met, inline_code_list, 
         @negation, @negation_code_list_id, mtr, mso, @specific_occurrence, 
         @specific_occurrence_const, @source_data_criteria, @comments)

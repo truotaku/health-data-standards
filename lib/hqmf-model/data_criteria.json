@@ -1120,6 +1120,17 @@
       "standard_category":"",
       "qds_data_type":"",
       "not_supported":true},
+  "DUMMY_dummy":{
+      "title":"dummy",
+      "category":"dummy",
+      "definition":"dummy",
+      "status":"",
+      "sub_category":"from",
+      "hard_status":false,
+      "patient_api_function":"encounters",
+      "standard_category":"",
+      "qds_data_type":"",
+      "not_supported":false},
   "transfer_from":{
       "title":"transfer, from",
       "category":"transfers",
