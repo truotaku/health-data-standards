@@ -153,16 +153,16 @@ Please note the following:
 
 In addition, we are requesting that the following codes be added to the set of valid temporal codes in HQMF:
 
-|    Code   |                 Meaning                 |
-| --------- | --------------------------------------- |
-| SBSORSCW  | starts before or concurrent with        |
-| SASORSCW  | starts after or concurrent with         |
-| SBEORSCWE | starts before or concurrent with end of |
-| SASORSCWE | starts after or concurrent with end of  |
-| EBSORECW  | ends before or concurrent with          |
-| EASORECW  | ends after or concurrent with           |
-| EBEORECWS | ends before or concurrent with start of |
-| EASORECWS | ends after or concurrent with start of  |
+|    Code   |                  Meaning                  |
+| --------- | ----------------------------------------- |
+| SBSORSCW  | starts before or concurrent with start of |
+| SASORSCW  | starts after or concurrent with start of  |
+| SBEORSCWE | starts before or concurrent with end of   |
+| SAEORSCWE | starts after or concurrent with end of    |
+| EBEORECW  | ends before or concurrent with end of     |
+| EAEORECW  | ends after or concurrent with end of      |
+| EBSORECWS | ends before or concurrent with start of   |
+| EASORECWS | ends after or concurrent with start of    |
 
 ## Examples
 
