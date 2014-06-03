@@ -67,7 +67,7 @@ examples directly from the QDM-based HQMF Implementation Guide.
             <templateId>
                 <item root="2.16.840.1.113883.10.20.28.3.5"/>
             </templateId>
-            <id root="d7fbe089-ff04-4f58-b604-cb6d5ebce4cc" extension="inpatientEncounterDuringLeucovorin"/>
+            <id root="d7fbe089-ff04-4f58-b604-cb6d5ebce4cc" extension="inpatientEncounterDuringMeasurePeriod"/>
             <code valueSet="2.16.840.1.113883.3.117.1.7.1.23">
                 <displayName value="Inpatient Encounter SNOMED-CT Value Set"/>
             </code>
@@ -220,7 +220,8 @@ HQMF R2.1 representation is exactly the same as `Satisfies All`, except it uses 
             <temporallyRelatedInformation typeCode="SAS">
                 <qdm:temporalInformation precisionUnit="d">
                     <qdm:delta>
-                        <low xsi:type="PQ" value="30" unit="d"/>
+                        <low value="30" unit="d"/>
+                        <high nullFlavor="PINF"/>
                     </qdm:delta>
                 </qdm:temporalInformation>
                 <criteriaReference classCode="OBS" moodCode="EVN">

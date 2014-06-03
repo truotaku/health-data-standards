@@ -61,7 +61,8 @@ examples directly from the QDM-based HQMF Implementation Guide.
             <temporallyRelatedInformation typeCode="SBS">
                 <qdm:temporalInformation precisionUnit="d">
                     <qdm:delta lowClosed="true">
-                        <low xsi:type="PQ" value="18" unit="a"/>
+                        <low value="18" unit="a"/>
+                        <high nullFlavor="PINF"/>
                     </qdm:delta>
                 </qdm:temporalInformation>
                 <criteriaReference classCode="OBS" moodCode="EVN">
@@ -141,7 +142,8 @@ examples directly from the QDM-based HQMF Implementation Guide.
             <temporallyRelatedInformation typeCode="SBS">
                 <qdm:temporalInformation precisionUnit="d">
                     <qdm:delta lowClosed="true">
-                        <low xsi:type="PQ" value="2" unit="a"/>
+                        <low value="2" unit="a"/>
+                        <high nullFlavor="PINF"/>
                     </qdm:delta>
                 </qdm:temporalInformation>
                 <criteriaReference classCode="OBS" moodCode="EVN">
@@ -166,8 +168,9 @@ examples directly from the QDM-based HQMF Implementation Guide.
             <statusCode code="completed"/>
             <temporallyRelatedInformation typeCode="SBS">
                 <qdm:temporalInformation precisionUnit="d">
-                    <qdm:delta>
-                        <high xsi:type="PQ" value="18" unit="a"/>
+                    <qdm:delta lowClosed="true">
+                        <low value="0" unit="a"/>
+                        <high value="18" unit="a"/>
                     </qdm:delta>
                 </qdm:temporalInformation>
                 <criteriaReference classCode="OBS" moodCode="EVN">

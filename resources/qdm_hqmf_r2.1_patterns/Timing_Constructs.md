@@ -81,7 +81,7 @@ The following XML schema defines the QDM `temporalRelation` extensional element:
             <xs:sequence>
                 <xs:element name="sourceAttribute" type="TemporalInformationAttribute" minOccurs="0"/>
                 <xs:element name="targetAttribute" type="TemporalInformationAttribute" minOccurs="0"/>
-                <xs:element name="delta" type="hl7:IVL_QTY" minOccurs="0"/>
+                <xs:element name="delta" type="hl7:IVL_PQ" minOccurs="0"/>
             </xs:sequence>
             <xs:attribute name="precisionUnit" type="hl7:Code" use="required"/>
         </xs:complexType>
@@ -151,6 +151,36 @@ Please note the following:
     * For example, `... starts before start of "Encounter, Performed: ABC (discharge datetime)"` is still valid 
       even though `departure datetime`maps to `effectiveTime.high`.
 
+### Delta
+
+When a temporal relationship specifies that one event is before or after another event, the `delta` specifies the 
+acceptable amount of time between the points of comparison.  Other temporal relationships (such as `SCW` or `DURING`)
+do _not_ allow a `delta` to be specified.  The following temporal relationships do _not_ allow `delta`:
+
+* `SCW` - starts concurrent with
+* `SCWE` - starts concurrent with end
+* `SDU` - starts during
+* `ECW` - ends concurrent with
+* `ECWS` - ends concurrent with start
+* `EDU` - ends during
+* `CONCURRENT` - concurrent with
+* `DURING` - during
+* `OVERLAP` - overlaps
+
+The `delta` element is an instance of the HL7 `IVL_PQ` type.  This allows a high and low to be specified, as well as
+whether or not the high / low is closed.  The following table shows the general translation from a QDM delta phrase
+to the `delta` element representation:
+
+|  Phrase | Low | LowClosed | High | HighClosed |                                                                    Example (using 3 hour(s))                                                                     |
+| ------- | --- | --------- | ---- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| &lt; x  | 0   | true      | x    | false      | &lt;qdm:delta lowClosed="true"><br/>&nbsp;&nbsp;&lt;low value="0" unit="h"/><br/>&nbsp;&nbsp;&lt;high value="3" unit="h"/><br/>&lt;/qdm:delta>                   |
+| &lt;= x | 0   | true      | x    | true       | &lt;qdm:delta lowClosed="true" highClosed="true"><br/>&nbsp;&nbsp;&lt;low value="0" unit="h"/><br/>&nbsp;&nbsp;&lt;high value="3" unit="h"/><br/></qdm:delta>    |
+| = x     | x   | true      | x    | true       | &lt;qdm:delta lowClosed="true" highClosed="true"><br/>&nbsp;&nbsp;&lt;low value="3" unit="h"/><br/>&nbsp;&nbsp;&lt;high value="3" unit="h"/><br/>&lt;/qdm:delta> |
+| >= x    | x   | true      | PINF | false      | &lt;qdm:delta lowClosed="true"><br/>&nbsp;&nbsp;&lt;low value="3" unit="h"/><br/>&nbsp;&nbsp;&lt;high nullFlavor="PINF"/><br/>&lt;/qdm:delta>                    |
+| > x     | x   | false     | PINF | false      | &lt;qdm:delta><br/>&nbsp;&nbsp;&lt;low value="3" unit="h"/><br/>&nbsp;&nbsp;&lt;high nullFlavor="PINF"/><br/>&lt;/qdm:delta>                                     |
+
+### Additional Temporal Codes
+
 In addition, we are requesting that the following codes be added to the set of valid temporal codes in HQMF:
 
 |    Code   |                  Meaning                  |
@@ -203,8 +233,9 @@ In addition, we are requesting that the following codes be added to the set of v
             <statusCode code="completed"/>
             <temporallyRelatedInformation typeCode="SBS">
                 <qdm:temporalInformation precisionUnit="min">
-                    <qdm:delta>
-                        <high xsi:type="PQ" value="3" unit="h"/>
+                    <qdm:delta lowClosed="true">
+                        <low value="0" unit="h"/>
+                        <high value="3" unit="h"/>
                     </qdm:delta>
                 </qdm:temporalInformation>
                 <criteriaReference classCode="OBS" moodCode="EVN">
@@ -260,8 +291,9 @@ In addition, we are requesting that the following codes be added to the set of v
                     <qdm:targetAttribute name="incision datetime" bound="effectiveTime.low">
                         <qdm:id root="d903f578-526d-49bc-98ed-bba5fe196a76"/>
                     </qdm:targetAttribute>
-                    <qdm:delta highClosed="true">
-                        <high xsi:type="PQ"  value="3" unit="h"/>
+                    <qdm:delta lowClosed="true" highClosed="true">
+                        <low value="0" unit="h"/>
+                        <high value="3" unit="h"/>
                     </qdm:delta>
                 </qdm:temporalInformation>
                 <criteriaReference classCode="PROC" moodCode="EVN">
@@ -335,8 +367,9 @@ In addition, we are requesting that the following codes be added to the set of v
                                          bound="effectiveTime.low">
                         <qdm:id root="d903f578-526d-49bc-98ed-bba5fe196a76"/>
                     </qdm:targetAttribute>
-                    <qdm:delta highClosed="true">
-                        <high xsi:type="PQ" value="3" unit="h"/>
+                    <qdm:delta lowClosed="true" highClosed="true">
+                        <low value="0" unit="h"/>
+                        <high value="3" unit="h"/>
                     </qdm:delta>
                 </qdm:temporalInformation>
                 <criteriaReference classCode="PROC" moodCode="EVN">
