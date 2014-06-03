@@ -174,7 +174,7 @@ to the `delta` element representation:
 |  Phrase | Low | LowClosed | High | HighClosed |                                                                    Example (using 3 hour(s))                                                                     |
 | ------- | --- | --------- | ---- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | &lt; x  | 0   | true      | x    | false      | &lt;qdm:delta lowClosed="true"><br/>&nbsp;&nbsp;&lt;low value="0" unit="h"/><br/>&nbsp;&nbsp;&lt;high value="3" unit="h"/><br/>&lt;/qdm:delta>                   |
-| &lt;= x | 0   | true      | x    | true       | &lt;qdm:delta lowClosed="true" highClosed="true"><br/>&nbsp;&nbsp;&lt;low value="0" unit="h"/><br/>&nbsp;&nbsp;&lt;high value="3" unit="h"/><br/></qdm:delta>    |
+| &lt;= x | 0   | true      | x    | true       | &lt;qdm:delta lowClosed="true" highClosed="true"><br/>&nbsp;&nbsp;&lt;low value="0" unit="h"/><br/>&nbsp;&nbsp;&lt;high value="3" unit="h"/><br/>&lt;/qdm:delta>    |
 | = x     | x   | true      | x    | true       | &lt;qdm:delta lowClosed="true" highClosed="true"><br/>&nbsp;&nbsp;&lt;low value="3" unit="h"/><br/>&nbsp;&nbsp;&lt;high value="3" unit="h"/><br/>&lt;/qdm:delta> |
 | >= x    | x   | true      | PINF | false      | &lt;qdm:delta lowClosed="true"><br/>&nbsp;&nbsp;&lt;low value="3" unit="h"/><br/>&nbsp;&nbsp;&lt;high nullFlavor="PINF"/><br/>&lt;/qdm:delta>                    |
 | > x     | x   | false     | PINF | false      | &lt;qdm:delta><br/>&nbsp;&nbsp;&lt;low value="3" unit="h"/><br/>&nbsp;&nbsp;&lt;high nullFlavor="PINF"/><br/>&lt;/qdm:delta>                                     |
