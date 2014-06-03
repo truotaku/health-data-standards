@@ -143,8 +143,18 @@ module HQMF2
           @status = defs['status'].length > 0 ? defs['status'] : nil
           @negation = defs['negation']
           return true
-        elsif template_id == "0.1.2.3.4.5.6.7.8.9"
-          @definition = "DUMMY"
+        elsif template_id == "0.1.2.3.4.5.6.7.8.9.1"
+          @definition = "DUMMY_VARIABLE"
+          @status = "DUMMY"
+          @negation = false
+          return true
+        elsif template_id == "0.1.2.3.4.5.6.7.8.9.2"
+          @definition = "DUMMY_SATISFIES_ANY"
+          @status = "DUMMY"
+          @negation = false
+          return true
+        elsif template_id == "0.1.2.3.4.5.6.7.8.9.3"
+          @definition = "DUMMY_SATISFIES_ALL"
           @status = "DUMMY"
           @negation = false
           return true
@@ -223,8 +233,12 @@ module HQMF2
       end
 
       tmp_code_list_id = code_list_id
-      if @definition == "DUMMY"
-        tmp_code_list_id = "0.1.2.3.4.5.6.7.8.9"
+      if @definition == "DUMMY_VARIABLE"
+        tmp_code_list_id = "0.1.2.3.4.5.6.7.8.9.1"
+      elsif @definition == "DUMMY_SATISFIES_ALL"
+        tmp_code_list_id = "0.1.2.3.4.5.6.7.8.9.2"
+      elsif @definition == "DUMMY_SATISFIES_ANY"
+        tmp_code_list_id = "0.1.2.3.4.5.6.7.8.9.3"
       end
       HQMF::DataCriteria.new(id, title, nil, description, tmp_code_list_id, children_criteria, 
         derivation_operator, @definition, status, mv, field_values, met, inline_code_list, 

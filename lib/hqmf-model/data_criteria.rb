@@ -32,7 +32,9 @@ module HQMF
              'REMOVAL_DATETIME' => {title:'Removal Date/Time', coded_entry_method: :removal_time, code: '118292001', code_system:'2.16.840.1.113883.6.96', template_id: '2.16.840.1.113883.3.560.1.1032.1', field_type: :timestamp},
              'TRANSFER_TO' => {title:'Transfer To', coded_entry_method: :transfer_to, code: 'TRANSFER_TO', template_id: '2.16.840.1.113883.3.560.1.72', field_type: :value},
              'TRANSFER_FROM' => {title:'Transfer From', coded_entry_method: :transfer_from, code: 'TRANSFER_FROM', template_id: '2.16.840.1.113883.3.560.1.71', field_type: :value},
-             'DUMMY_dummy' => {title:'Dummy', coded_entry_method: :transfer_from, code: 'DUMMY', template_id: '0.1.2.3.4.5.6.7.8.9', field_type: :value}
+             'DUMMY_VARIABLE_dummy' => {title:'Dummy', coded_entry_method: :transfer_from, code: 'DUMMY', template_id: '0.1.2.3.4.5.6.7.8.9.1', field_type: :value},
+             'DUMMY_SATISFIES_ALL_dummy' => {title:'Dummy', coded_entry_method: :transfer_from, code: 'DUMMY', template_id: '0.1.2.3.4.5.6.7.8.9.2', field_type: :value},
+             'DUMMY_SATISFIES_ANY_dummy' => {title:'Dummy', coded_entry_method: :transfer_from, code: 'DUMMY', template_id: '0.1.2.3.4.5.6.7.8.9.3', field_type: :value}
              }
              
     VALUE_FIELDS = {'SEV'      => 'SEVERITY',

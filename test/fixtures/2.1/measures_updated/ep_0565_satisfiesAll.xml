@@ -2082,7 +2082,7 @@
         <localVariableName value="satisfiesAllExample"/>
         <grouperCriteria classCode="GROUPER" moodCode="EVN">
           <templateId>
-            <item root="0.1.2.3.4.5.6.7.8.9" identifierName="Satisfies All"/>
+            <item root="0.1.2.3.4.5.6.7.8.9.2" identifierName="Satisfies All"/>
           </templateId>
           <id root="0" extension="satisfiesAllExample"/>
           <text value="Satisfies All Test"/>
