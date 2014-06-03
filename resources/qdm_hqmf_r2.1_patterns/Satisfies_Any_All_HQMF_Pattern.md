@@ -96,6 +96,7 @@ examples directly from the QDM-based HQMF Implementation Guide.
             <title value="Encounter, Performed"/>
             <statusCode code="completed"/>
             <temporallyRelatedInformation typeCode="SAS">
+                <qdm:temporalInformation precisionUnit="min"/>
                 <criteriaReference classCode="OBS" moodCode="EVN">
                     <id root="9e4e810d-3c3e-461e-86f8-6fe7a0b1ca2b" extension="diagnosisVT"/>
                 </criteriaReference>
@@ -245,6 +246,7 @@ HQMF R2.1 representation is exactly the same as `Satisfies All`, except it uses 
             <title value="Encounter, Performed"/>
             <statusCode code="completed"/>
             <temporallyRelatedInformation typeCode="DURING">
+                <qdm:temporalInformation precisionUnit="min"/>
                 <criteriaReference classCode="SBADM" moodCode="EVN">
                     <id root="6c21f22e-3ae3-435d-a240-7718cc418b7d" extension="medicationLeucovorin" />
                 </criteriaReference>
