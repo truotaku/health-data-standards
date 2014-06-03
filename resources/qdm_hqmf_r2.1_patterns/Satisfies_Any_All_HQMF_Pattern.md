@@ -67,7 +67,7 @@ examples directly from the QDM-based HQMF Implementation Guide.
             <templateId>
                 <item root="2.16.840.1.113883.10.20.28.3.5"/>
             </templateId>
-            <id root="d7fbe089-ff04-4f58-b604-cb6d5ebce4cc" extension="inpatientEncounterDuringLeucovorin"/>
+            <id root="d7fbe089-ff04-4f58-b604-cb6d5ebce4cc" extension="inpatientEncounterDuringMeasurePeriod"/>
             <code valueSet="2.16.840.1.113883.3.117.1.7.1.23">
                 <displayName value="Inpatient Encounter SNOMED-CT Value Set"/>
             </code>
@@ -96,6 +96,7 @@ examples directly from the QDM-based HQMF Implementation Guide.
             <title value="Encounter, Performed"/>
             <statusCode code="completed"/>
             <temporallyRelatedInformation typeCode="SAS">
+                <qdm:temporalInformation precisionUnit="min"/>
                 <criteriaReference classCode="OBS" moodCode="EVN">
                     <id root="9e4e810d-3c3e-461e-86f8-6fe7a0b1ca2b" extension="diagnosisVT"/>
                 </criteriaReference>
@@ -220,7 +221,8 @@ HQMF R2.1 representation is exactly the same as `Satisfies All`, except it uses 
             <temporallyRelatedInformation typeCode="SAS">
                 <qdm:temporalInformation precisionUnit="d">
                     <qdm:delta>
-                        <low xsi:type="PQ" value="30" unit="d"/>
+                        <low value="30" unit="d"/>
+                        <high nullFlavor="PINF"/>
                     </qdm:delta>
                 </qdm:temporalInformation>
                 <criteriaReference classCode="OBS" moodCode="EVN">
@@ -244,6 +246,7 @@ HQMF R2.1 representation is exactly the same as `Satisfies All`, except it uses 
             <title value="Encounter, Performed"/>
             <statusCode code="completed"/>
             <temporallyRelatedInformation typeCode="DURING">
+                <qdm:temporalInformation precisionUnit="min"/>
                 <criteriaReference classCode="SBADM" moodCode="EVN">
                     <id root="6c21f22e-3ae3-435d-a240-7718cc418b7d" extension="medicationLeucovorin" />
                 </criteriaReference>
