@@ -23,6 +23,7 @@
               <%- if is_transfer(details[:code]) -%>
               <title value="<%= details[:code] %>" />
               <statusCode code="completed" />
+              <%= xml_for_value(value) %>
               <participation  typeCode="ORG">
                 <role classCode="LOCE">
                   <code xsi:type="CD" />
@@ -32,8 +33,8 @@
               <code code="<%= details[:code] %>" codeSystem="<%= details[:code_system] %>" codeSystemName="<%= details[:code_system_name] %>">
                 <displayName value="<%=ERB::Util::h details[:title] %>"/> 
               </code>
-              <%- end -%>
               <%= xml_for_value(value) %>
+              <%- end -%>
             </observationCriteria>
 <%- end -%>
           </outboundRelationship>
