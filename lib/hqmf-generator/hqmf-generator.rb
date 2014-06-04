@@ -343,6 +343,8 @@ module HQMF2
           'measurePopulation'  
         when HQMF::PopulationCriteria::OBSERV
            'measureObservation'  
+        when HQMF::PopulationCriteria::STRAT
+           'stratifier'  
         else  
           raise "Unknown population criteria type #{population_criteria_code}"
         end
