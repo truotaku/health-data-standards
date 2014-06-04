@@ -107,6 +107,7 @@ module HQMF2
           HQMF::PopulationCriteria::NUMER => 'numeratorCriteria',
           HQMF::PopulationCriteria::DENEXCEP => 'denominatorExceptionCriteria',
           HQMF::PopulationCriteria::DENEX => 'denominatorExclusionCriteria',
+          HQMF::PopulationCriteria::STRAT => 'stratifierCriteria',
           HQMF::PopulationCriteria::MSRPOPL => 'measurePopulationCriteria'
         }.each_pair do |criteria_id, criteria_element_name|
           criteria_def = population_def.at_xpath("cda:component[cda:#{criteria_element_name}]", NAMESPACES)
