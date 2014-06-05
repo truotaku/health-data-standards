@@ -10,10 +10,14 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
 
   # Automatically generate one test method per measure file
   measure_files = File.join('test', 'fixtures', '1.0', 'measures', '*.xml')
+  counter = 0
   Dir.glob(measure_files).each do | measure_filename |
-    measure_name = /.*[\/\\]((ep|eh)_.*)\.xml/.match(measure_filename)[1]
-    define_method("test_#{measure_name}") do
-      do_roundtrip_test(measure_filename, measure_name)
+    counter += 1
+    if counter % 7 == 0  
+      measure_name = /.*[\/\\]((ep|eh)_.*)\.xml/.match(measure_filename)[1]
+      define_method("test_#{measure_name}") do
+        do_roundtrip_test(measure_filename, measure_name)
+      end
     end
   end
 
