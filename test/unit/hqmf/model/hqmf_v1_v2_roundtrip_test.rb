@@ -21,14 +21,14 @@ class HQMFV1V2RoundtripTest < Test::Unit::TestCase
     puts ">> #{measure_name}"
     # open the v1 file and generate a v2.1 xml string
 
-    v1_model = HQMF::Parser.parse(File.open(measure_filename).read, '1.0')
+    v1_model = HQMF::Parser::V1Parser.new.parse(File.open(measure_filename).read)
     skip('ep_0405 reverses populations during roundtrip, but is still corrrect') if measure_name == "ep_0405"
     #skip('Continuous Variable measures currently not supported') if v1_model.population_criteria('MSRPOPL')
 
     hqmf_xml = HQMF2::Generator::ModelProcessor.to_hqmf(v1_model)
     
     begin
-      v2_model = HQMF::Parser.parse(hqmf_xml, '2.0')
+      v2_model = HQMF::Parser::V2Parser.new.parse(hqmf_xml)
 
       v1_json = JSON.parse(v1_model.to_json.to_json,max_nesting: 100)
       v2_json = JSON.parse(v2_model.to_json.to_json,max_nesting: 100)

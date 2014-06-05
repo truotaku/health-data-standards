@@ -22,8 +22,8 @@ class HQMFV2NewOperators < Test::Unit::TestCase
     puts ">> #{measure_name}"
     
     begin 
-      v2_model = HQMF::Parser.parse(File.open(measure_file).read, '2.0')
-      v2_updated_model = HQMF::Parser.parse(File.open(measure_updated_file).read, '2.0')
+      v2_model = HQMF::Parser::V2Parser.new.parse(File.open(measure_file).read)
+      v2_updated_model = HQMF::Parser::V2Parser.new.parse(File.open(measure_updated_file).read)
     
       v2_json = JSON.parse(v2_model.to_json.to_json)
       v2_updated_json = JSON.parse(v2_updated_model.to_json.to_json)

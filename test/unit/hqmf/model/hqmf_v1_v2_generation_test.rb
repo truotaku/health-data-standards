@@ -53,7 +53,7 @@ class HQMFV1V2GenerationTest < Test::Unit::TestCase
 
   def do_validation_test(measure_filename, measure_name)
     # open the v1 file and generate a v2.1 xml string
-    v1_model = HQMF::Parser.parse(File.open(measure_filename).read, '1.0')
+    v1_model = HQMF::Parser::V1Parser.new.parse(File.open(measure_filename).read)
 
     skip('Continuous Variable measures currently not supported') if v1_model.population_criteria('MSRPOPL')
 

@@ -45,9 +45,7 @@ module HQMF
       
       doc = HQMF::Document.new(id, hqmf_id, hqmf_set_id, hqmf_version_number, cms_id, title, description, population_criteria, data_criteria, source_data_criteria, attributes, measure_period, populations)
        
-      doc.backfill_patient_characteristics_with_codes(codes) if codes
-      
-      HQMF::DocumentConverter.validate(doc, codes)
+      HQMF::DocumentConverter.validate(doc, codes) if codes
       
       doc
       
