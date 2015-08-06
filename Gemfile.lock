@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/projecttacoma/simplexml_parser.git
+  revision: aa27c6caa1952b915cc7a1645c18d5c476aefee3
+  branch: master
+  specs:
+    simplexml_parser (1.0.0)
+
 PATH
   remote: .
   specs:
@@ -121,6 +128,7 @@ DEPENDENCIES
   pry-nav (~> 0.2.2)
   rake
   simplecov
+  simplexml_parser!
   tailor (~> 1.1.2)
   turn
   webmock

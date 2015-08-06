@@ -20,4 +20,6 @@ group :test do
   gem 'turn', :require => false
   gem 'awesome_print', :require => 'ap'
 
+  gem 'simplexml_parser', :git => 'https://github.com/projecttacoma/simplexml_parser.git', :branch => 'master'
+
 end
