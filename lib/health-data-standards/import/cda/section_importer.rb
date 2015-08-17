@@ -58,8 +58,13 @@ module HealthDataStandards
 
         def extract_description(parent_element, entry, nrh)
           desc_ref_element = parent_element.at_xpath("./cda:text/cda:reference")
-          if desc_ref_element && desc_ref_element['value']
+          if desc_ref_element && desc_ref_element['value'] && (@entry_class != Medication)
               entry.description = nrh.lookup_tag(desc_ref_element['value'])
+          elsif @entry_class == Medication
+            med_desc_ref = parent_element.at_xpath(@description_xpath)
+            if med_desc_ref && med_desc_ref['value']
+              entry.description = nrh.lookup_tag(med_desc_ref['value'])
+            end
           else
             entry.description = parent_element.at_xpath("./cda:text").try("text")
           end
