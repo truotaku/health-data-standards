@@ -128,9 +128,10 @@ Measure Section
                  unless result.is_cv?
                   result.population_groups.each do |pg|
               -%>
-              <component>
-              <%== render :partial => 'performance_rate', :locals => {:population_group => pg} %>
-              </component>
+              <!-- <component> -->
+              <!-- performance rate is optional in Cypress test (causing error currently) -->
+              <!-- <%== render :partial => 'performance_rate', :locals => {:population_group => pg} %> -->
+              <!-- </component> -->
               <% end
                 end -%>
               <% result.populations.each do |pop|
